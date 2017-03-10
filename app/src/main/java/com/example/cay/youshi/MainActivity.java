@@ -28,9 +28,6 @@ import com.example.cay.youshi.bean.UpDdtaBackBean;
 import com.example.cay.youshi.bean.VersionUpdataBean;
 import com.example.cay.youshi.databinding.ActivityMainBinding;
 import com.example.cay.youshi.http.HttpUtils;
-import com.example.cay.youshi.http.RxBus.RxBus;
-import com.example.cay.youshi.http.RxBus.RxBusBaseMessage;
-import com.example.cay.youshi.http.RxBus.RxCodeConstants;
 import com.example.cay.youshi.statusbar.StatusBarUtil;
 import com.example.cay.youshi.ui.activity.SearchMovieActivity;
 import com.example.cay.youshi.ui.fragment.MeFragment;
@@ -51,7 +48,6 @@ import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 
@@ -78,7 +74,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         initContentFragment();
         initDrawerLayout();
         initListener();
-        initRxBus();
         Connector.getDatabase();
         versionUpdateJianCe();
        // MiPushClient.setAlias(this,"0510016",null);
@@ -253,19 +248,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-   /**
-     * 每日推荐点击"新电影热映榜"跳转
-     */
-    private void initRxBus() {
-        disposable = new CompositeDisposable();
-        disposable.add(RxBus.getDefault().toObservable(RxCodeConstants.JUMP_TYPE_TO_ONE, RxBusBaseMessage.class)
-                .subscribe(new Consumer() {
-                    @Override
-                    public void accept(Object o) throws Exception {
-                        mBinding.include.vpContent.setCurrentItem(1);
-                    }
-                }));
-    }
+
 
     /**
      * 双击返回桌面
