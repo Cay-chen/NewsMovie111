@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.cay.youshi">
+
+    <uses-sdk android:minSdkVersion="8" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_LOGS" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+
+    <permission
+        android:name="com.example.cay.youshi.permission.MIPUSH_RECEIVE"
+        android:protectionLevel="signature" />
+    <!-- 这里com.xiaomi.mipushdemo改成app的包名 -->
+    <uses-permission android:name="com.example.cay.newsmovie.permission.MIPUSH_RECEIVE" />
+
+    <!-- 这里com.xiaomi.mipushdemo改成app的包名 -->
+    <application
+        android:name="com.example.cay.youshi.app.MyApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/icon"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+      <!--  /************Bugly 的配置开始***********************/
+        &lt;!&ndash; 配置APP ID &ndash;&gt;
+        <meta-data
+            android:name="BUGLY_APPID"
+            android:value="1913fc7b8f" />
+        &lt;!&ndash; 配置APP版本号 &ndash;&gt;
+        <meta-data
+            android:name="BUGLY_APP_VERSION"
+            android:value="1.3" />
+        &lt;!&ndash; 配置APP渠道号 &ndash;&gt;
+        <meta-data
+            android:name="BUGLY_APP_CHANNEL"
+            android:value="360" />
+        &lt;!&ndash; 配置Bugly调试模式（true或者false） &ndash;&gt;
+        <meta-data
+            android:name="BUGLY_ENABLE_DEBUG"
+            android:value="false" />
+        /************Bugly 的配置 结束***********************/-->
+        <activity
+            android:name="com.example.cay.youshi.ui.activity.SplashActivity"
+            android:alwaysRetainTaskState="true"
+            android:clearTaskOnLaunch="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/ViewBigPicTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name="com.example.cay.youshi.ui.activity.SearchMovieActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name="com.example.cay.youshi.MainActivity"
+            android:alwaysRetainTaskState="true"
+            android:clearTaskOnLaunch="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.example.cay.youshi.base.BaseActivity"
+            android:label="@string/title_activity_base"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name="com.example.cay.youshi.webview.WebViewActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.example.cay.youshi.ui.menu.NavHomePageActivity"
+            android:theme="@style/MyScrollPage"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.example.cay.youshi.ui.menu.NavDeedBackActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.example.cay.youshi.ui.activity.HotMovieActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.example.cay.youshi.ui.menu.NavAboutActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name="com.example.cay.youshi.ui.menu.NavDownloadActivity" />
+        <activity
+            android:name="com.example.cay.youshi.ui.activity.MovieDetailActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/MyScrollPage" />
+
+        /*****************小米推送server 开始***********/
+        <!-- android:process=":pushservice" -->
+
+        <service
+            android:name="com.xiaomi.push.service.XMPushService"
+            android:enabled="true" />
+        <!-- android:process=":pushservice" -->
+        <service
+            android:name="com.xiaomi.push.service.XMJobService"
+            android:enabled="true"
+            android:exported="false"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
+        <!-- 注：此service必须在3.0.1版本以后（包括3.0.1版本）加入 -->
+        <service
+            android:name="com.xiaomi.mipush.sdk.PushMessageHandler"
+            android:enabled="true"
+            android:exported="true" />
+        <service
+            android:name="com.xiaomi.mipush.sdk.MessageHandleService"
+            android:enabled="true" />
+        <!-- 注：此service必须在2.2.5版本以后（包括2.2.5版本）加入 -->
+        <receiver
+            android:name="com.xiaomi.push.service.receivers.NetworkStatusReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </receiver>
+        <!-- android:process=":pushservice" -->
+
+        <receiver
+            android:name="com.xiaomi.push.service.receivers.PingReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.xiaomi.push.PING_TIMER" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name="com.example.cay.youshi.BroadcastReceiver.MyMessageReceiver"
+            android:exported="true">
+
+            <!-- 这里com.xiaomi.mipushdemo.DemoMessageRreceiver改成app中定义的完整类名 -->
+            <intent-filter>
+                <action android:name="com.xiaomi.mipush.RECEIVE_MESSAGE" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.xiaomi.mipush.MESSAGE_ARRIVED" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.xiaomi.mipush.ERROR" />
+            </intent-filter>
+        </receiver>
+        /*****************小米推送server 结束***********/
+        <activity
+            android:name="com.example.cay.youshi.ui.activity.IssueActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name="com.example.cay.youshi.ui.activity.GetMovieActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name="com.example.cay.youshi.player.MyPlayerActivity"
+            android:theme="@style/JCPlayThem"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait"/>
+        <activity android:name="com.example.cay.youshi.ui.activity.LocalsActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait" />
+        <activity android:name="com.example.cay.youshi.ui.activity.PlayRecordCActivity"
+            android:screenOrientation="portrait"/>
+    </application>
+
+</manifest>
