@@ -21,6 +21,7 @@ import com.bumptech.glide.Glide;
 import com.example.cay.youshi.MainActivity;
 import com.example.cay.youshi.R;
 import com.example.cay.youshi.adapter.EveryDayAdapter;
+import com.example.cay.youshi.app.MyApplication;
 import com.example.cay.youshi.base.GlideImageLoader;
 import com.example.cay.youshi.base.adapter.BaseFragment;
 import com.example.cay.youshi.base.adapter.MultipleItem;
@@ -184,7 +185,7 @@ public class EverydayFragment extends BaseFragment<FragmentEverydayBinding> {
 
                     @Override
                     public void onNext(String value) {
-
+                        MyApplication.IP =value;
                         if (mIsFirst) {
                             initData();
                             initFirstData();

@@ -24,6 +24,7 @@ public class MyApplication extends Application {
     public static final String APP_KEY = "5111754767390";
     public static final String TAG = "com.example.cay.newsmovie";
     public static Context context;
+    public static String IP = null;
     public static MyApplication getInstance() {
         // if语句下是不会走的，Application本身已单例
         if (myApplication == null) {
