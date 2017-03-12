@@ -3,6 +3,7 @@ package com.example.cay.youshi;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
@@ -62,7 +63,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private FrameLayout llTitleMenu;
     private DrawerLayout drawerLayout;
     private ViewPager vpContent;
-    private CompositeDisposable disposable;
+    private FloatingActionButton mFl;
     private static final String TAG = "Cay";
 
     @Override
@@ -90,12 +91,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         llTitleGank = mBinding.include.ivTitleGank;
         llTitleOne = mBinding.include.ivTitleOne;
         vpContent = mBinding.include.vpContent;
+        mFl = mBinding.include.fab;
+        mFl.setImageResource(R.mipmap.fuli);
     }
 
     private void initListener() {
         llTitleMenu.setOnClickListener(this);
         llTitleGank.setOnClickListener(this);
         llTitleOne.setOnClickListener(this);
+        mFl.setOnClickListener(this);
     }
 
     /**
@@ -152,7 +156,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.iv_title_one:// 所有电影栏
                 if (vpContent.getCurrentItem() != 1) {
-                    Log.i(TAG, "iv_title_one: ");
                     vpContent.setCurrentItem(1);
                 }
                 break;
@@ -368,6 +371,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        disposable.clear();
     }
 }

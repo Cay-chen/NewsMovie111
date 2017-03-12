@@ -1,7 +1,10 @@
 package com.example.cay.youshi.http;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.util.Log;
 
+import com.example.cay.youshi.app.MyApplication;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
 import java.io.File;
@@ -47,13 +50,22 @@ public class HttpUtils {
         }
         return okHttpClient;
     }
-
-
-    public RetrofitHttpClient getJuHeDataUtil() {
-        if (mJuHeClient == null) {
-            mJuHeClient = new Retrofit.Builder().baseUrl("http://v.juhe.cn").addConverterFactory(FastJsonConverterFactory.create())
+    private String getSpIp() {
+        SharedPreferences sp =context.getSharedPreferences("LOCAL_IP",0);
+        String result = sp.getString("ip", null);
+        return "http://"+result+":8889";
+    }
+    public RetrofitHttpClient getYouShiData(boolean isUpdateIp) {
+        if (isUpdateIp) {
+            Log.i("Cay", "更新了Http请求客服端: ");
+            mJuHeClient = new Retrofit.Builder().baseUrl(getSpIp()).addConverterFactory(FastJsonConverterFactory.create())
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create()).client(getOkHttpClient()).build().create(RetrofitHttpClient.class);
         }
+        if (mJuHeClient == null) {
+            mJuHeClient = new Retrofit.Builder().baseUrl(getSpIp()).addConverterFactory(FastJsonConverterFactory.create())
+                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create()).client(getOkHttpClient()).build().create(RetrofitHttpClient.class);
+        }
+
         return mJuHeClient;
     }
 

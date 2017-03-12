@@ -11,6 +11,8 @@ import com.example.cay.youshi.bean.NewsBackDataBean;
 import com.example.cay.youshi.bean.UpDdtaBackBean;
 import com.example.cay.youshi.bean.VersionUpdataBean;
 import com.example.cay.youshi.bean.WeiXinBackBean;
+import com.example.cay.youshi.bean.YouShiFirstDataBean;
+import com.example.cay.youshi.bean.YouShiMovieDealisBean;
 
 import java.util.List;
 
@@ -227,5 +229,10 @@ public interface RetrofitHttpClient {
     @GET("VMovie/ServerGetCommentData")
     Observable<List<CommentDataBean>> getCommentData(@Query("name")String name, @Query("position") String position, @Query("num") String num);
 
+    @GET("/YouShiServer/FirstData")
+    Observable<YouShiFirstDataBean> getYouShiFirstData();
+
+    @GET("/YouShiServer/MovieDetail")
+    Observable<YouShiMovieDealisBean> getYouShiMovieDetail(@Query("id") String id);
 }
 

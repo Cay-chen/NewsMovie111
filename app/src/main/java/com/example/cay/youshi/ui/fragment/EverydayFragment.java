@@ -3,12 +3,14 @@ package com.example.cay.youshi.ui.fragment;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.Animation;
@@ -18,15 +20,12 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 
 import com.bumptech.glide.Glide;
-import com.example.cay.youshi.MainActivity;
 import com.example.cay.youshi.R;
-import com.example.cay.youshi.adapter.EveryDayAdapter;
-import com.example.cay.youshi.app.MyApplication;
+import com.example.cay.youshi.adapter.YouShiNineAdapter;
 import com.example.cay.youshi.base.GlideImageLoader;
 import com.example.cay.youshi.base.adapter.BaseFragment;
-import com.example.cay.youshi.base.adapter.MultipleItem;
-import com.example.cay.youshi.bean.BannerDataBean;
-import com.example.cay.youshi.bean.FirstRxDataBean;
+import com.example.cay.youshi.bean.YouShiFirstDataBean;
+import com.example.cay.youshi.bean.YouShiNintBean;
 import com.example.cay.youshi.databinding.FooterItemEverydayBinding;
 import com.example.cay.youshi.databinding.FragmentEverydayBinding;
 import com.example.cay.youshi.databinding.HeaderItemEverydayBinding;
@@ -34,6 +33,7 @@ import com.example.cay.youshi.http.HttpUtils;
 import com.example.cay.youshi.http.RxBus.RxBus;
 import com.example.cay.youshi.http.RxBus.RxBusBaseMessage;
 import com.example.cay.youshi.http.RxBus.RxCodeConstants;
+import com.example.cay.youshi.ui.activity.BaiDuMovieDetailActivity;
 import com.example.cay.youshi.ui.activity.GetMovieActivity;
 import com.example.cay.youshi.ui.activity.HotMovieActivity;
 import com.example.cay.youshi.ui.activity.MovieDetailActivity;
@@ -59,26 +59,22 @@ import io.reactivex.schedulers.Schedulers;
  * 每日推荐
  */
 public class EverydayFragment extends BaseFragment<FragmentEverydayBinding> {
+    private static final String TAG = "Cay";
 
     private RecyclerView mRecyclerView;
     private HeaderItemEverydayBinding mHeaderBinding;
-
     private View mHeaderView;
     private View mFooterView;
-    private boolean mIsFirst = true;
+    private SharedPreferences sp;
     private RotateAnimation animation;
-    private EveryDayAdapter mEveryDayAdapter;
-    private MainActivity activity;
+    private YouShiNineAdapter mYouShiNineAdapter;
+    private boolean isZiDongGet = false;
+    private boolean isGetNetwork = false;  //是否网络获取过Ip
+
 
     @Override
     public int setContent() {
         return R.layout.fragment_everyday;
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        activity = (MainActivity) context;
     }
 
     @Override
@@ -136,32 +132,38 @@ public class EverydayFragment extends BaseFragment<FragmentEverydayBinding> {
         ibt_movie.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(activity, GetMovieActivity.class);
-                activity.startActivity(intent);
+                Intent intent = new Intent(getContext(), GetMovieActivity.class);
+                getContext().startActivity(intent);
             }
         });
         imh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(activity, HotMovieActivity.class);
-                activity.startActivity(intent);
+                Intent intent = new Intent(getContext(), HotMovieActivity.class);
+                getContext().startActivity(intent);
             }
         });
         mFooterView = mFooterBinding.getRoot();
         initRecyulerView();
 
+        if (getSpIp() == null) {
+            getNetworkIp();
+        } else {
+            initFirstData(false);
+        }
 
     }
 
     @Override
     protected void loadData() {
-        getFirstIp();
+
+
 
     }
 
     private void initRecyulerView() {
         mRecyclerView = bindingView.xrvEveryday;
-        LinearLayoutManager manager = new LinearLayoutManager(activity);
+        LinearLayoutManager manager = new LinearLayoutManager(getContext());
         manager.setOrientation(OrientationHelper.VERTICAL);
         mRecyclerView.setLayoutManager(manager);
 // 需加，不然滑动不流畅
@@ -169,7 +171,10 @@ public class EverydayFragment extends BaseFragment<FragmentEverydayBinding> {
         mRecyclerView.setHasFixedSize(false);
     }
 
-    private void getFirstIp() {
+    /**
+     * 网络数据库获取Ip,并保存到sp中
+     */
+    private void getNetworkIp() {
         Observable.create(new ObservableOnSubscribe<String>() {
             @Override
             public void subscribe(ObservableEmitter<String> e) throws Exception {
@@ -180,26 +185,22 @@ public class EverydayFragment extends BaseFragment<FragmentEverydayBinding> {
                 .subscribe(new Observer<String>() {
                     @Override
                     public void onSubscribe(Disposable d) {
-
                     }
 
                     @Override
                     public void onNext(String value) {
-                        MyApplication.IP =value;
-                        if (mIsFirst) {
-                            initData();
-                            initFirstData();
-                        }
+                        Log.i(TAG, "获取远程Ip成功: "+value);
+                        sp.edit().putString("ip", value).commit();
+                        isGetNetwork = true;
+                        initFirstData(true);
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        mRecyclerView.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                showError();
-                            }
-                        }, 3000);
+                        Log.i(TAG, "获取远程Ip失败 ");
+
+                        isGetNetwork =false;
+                        showError();
                     }
 
                     @Override
@@ -209,77 +210,243 @@ public class EverydayFragment extends BaseFragment<FragmentEverydayBinding> {
                 });
     }
 
-    private void initFirstData() {
+    /**
+     * 本地SP获取数据
+     *
+     * @return ss
+     */
+    public String getSpIp() {
+        sp =getActivity().getSharedPreferences("LOCAL_IP", 0);
+        String result = sp.getString("ip", null);
+        return result;
+    }
 
-        HttpUtils.getInstance().getMyObservableClient().getEveryDayRvData()
-                .subscribeOn(Schedulers.io())
+    private void initFirstData(boolean isUpdateIp) {
+        HttpUtils.getInstance().getYouShiData(isUpdateIp).getYouShiFirstData().subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<List<FirstRxDataBean>>() {
+                .subscribe(new Observer<YouShiFirstDataBean>() {
                     @Override
                     public void onSubscribe(Disposable d) {
-
                     }
 
                     @Override
-                    public void onNext(List<FirstRxDataBean> list) {
-                        List<MultipleItem> mList = new ArrayList<>();
-                        for (int i = 0; i < list.size(); i++) {
-                            FirstRxDataBean bean = list.get(i);
-                            mList.add(new MultipleItem(bean.getType(), bean.getImg1(), bean.getMid1(), bean.getCon1(), bean.getImg2(), bean.getMid2(), bean.getCon2(), bean.getImg3(), bean.getMid3(), bean.getCon3(), bean.getG_type(), bean.getTitle(), bean.getIsTitle()));
+                    public void onNext(YouShiFirstDataBean value) {
+                        Log.i(TAG, "请求数据成功: ");
+                        /**************获取banner数据****************************/
+                        String[] bannerTitle = new String[value.getBanners().size()];
+                        String[] bannerImg = new String[value.getBanners().size()];
+                        String[] bannerId = new String[value.getBanners().size()];
+                        String[] bannerType = new String[value.getBanners().size()];
+                        for (int i = 0; i < value.getBanners().size(); i++) {
+                            bannerTitle[i] = value.getBanners().get(i).getName();
+                            bannerImg[i] = value.getBanners().get(i).getImg_url();
+                            bannerId[i] = value.getBanners().get(i).getMovie_id();
+                            bannerType[i] = value.getBanners().get(i).getType();
                         }
-                        mEveryDayAdapter = new EveryDayAdapter(activity, mList);
-                        mEveryDayAdapter.addHeaderView(mHeaderView);
-                        mEveryDayAdapter.addFooterView(mFooterView);
-                        mRecyclerView.setAdapter(mEveryDayAdapter);
-                        mIsFirst = false;
+                        initBanner(bannerImg, bannerTitle, bannerId, bannerType);
+                        /**************获取rv数据****************************/
+                        List<YouShiNintBean> mList = new ArrayList<>();
+                        YouShiNintBean nintBean = new YouShiNintBean();
+                        for (int i = 0; i < value.getMovie().size(); i++) {
+                            switch (i) {
+                                case 0:
+                                    nintBean.setCode_1(value.getMovie().get(i).getCode());
+                                    nintBean.setId_1(value.getMovie().get(i).getId());
+                                    nintBean.setImg_url_1(value.getMovie().get(i).getImg_url());
+                                    nintBean.setNow_num_1(value.getMovie().get(i).getNow_num());
+                                    nintBean.setTotal_num_1(value.getMovie().get(i).getTotal_num());
+                                    nintBean.setName_1(value.getMovie().get(i).getName());
+                                    nintBean.setYear_1(value.getMovie().get(i).getYear());
+                                    break;
+                                case 1:
+                                    nintBean.setCode_2(value.getMovie().get(i).getCode());
+                                    nintBean.setId_2(value.getMovie().get(i).getId());
+                                    nintBean.setImg_url_2(value.getMovie().get(i).getImg_url());
+                                    nintBean.setNow_num_2(value.getMovie().get(i).getNow_num());
+                                    nintBean.setTotal_num_2(value.getMovie().get(i).getTotal_num());
+                                    nintBean.setName_2(value.getMovie().get(i).getName());
+                                    nintBean.setYear_2(value.getMovie().get(i).getYear());
+                                    break;
+                                case 2:
+                                    nintBean.setCode_3(value.getMovie().get(i).getCode());
+                                    nintBean.setId_3(value.getMovie().get(i).getId());
+                                    nintBean.setImg_url_3(value.getMovie().get(i).getImg_url());
+                                    nintBean.setNow_num_3(value.getMovie().get(i).getNow_num());
+                                    nintBean.setTotal_num_3(value.getMovie().get(i).getTotal_num());
+                                    nintBean.setName_3(value.getMovie().get(i).getName());
+                                    nintBean.setYear_3(value.getMovie().get(i).getYear());
+                                    break;
+                                case 3:
+                                    nintBean.setCode_4(value.getMovie().get(i).getCode());
+                                    nintBean.setId_4(value.getMovie().get(i).getId());
+                                    nintBean.setImg_url_4(value.getMovie().get(i).getImg_url());
+                                    nintBean.setNow_num_4(value.getMovie().get(i).getNow_num());
+                                    nintBean.setTotal_num_4(value.getMovie().get(i).getTotal_num());
+                                    nintBean.setName_4(value.getMovie().get(i).getName());
+                                    nintBean.setYear_4(value.getMovie().get(i).getYear());
+                                    break;
+                                case 4:
+                                    nintBean.setCode_5(value.getMovie().get(i).getCode());
+                                    nintBean.setId_5(value.getMovie().get(i).getId());
+                                    nintBean.setImg_url_5(value.getMovie().get(i).getImg_url());
+                                    nintBean.setNow_num_5(value.getMovie().get(i).getNow_num());
+                                    nintBean.setTotal_num_5(value.getMovie().get(i).getTotal_num());
+                                    nintBean.setName_5(value.getMovie().get(i).getName());
+                                    nintBean.setYear_5(value.getMovie().get(i).getYear());
+                                    break;
+                                case 5:
+                                    nintBean.setCode_6(value.getMovie().get(i).getCode());
+                                    nintBean.setId_6(value.getMovie().get(i).getId());
+                                    nintBean.setImg_url_6(value.getMovie().get(i).getImg_url());
+                                    nintBean.setNow_num_6(value.getMovie().get(i).getNow_num());
+                                    nintBean.setTotal_num_6(value.getMovie().get(i).getTotal_num());
+                                    nintBean.setName_6(value.getMovie().get(i).getName());
+                                    nintBean.setYear_6(value.getMovie().get(i).getYear());
+                                    break;
+                                case 6:
+                                    nintBean.setCode_7(value.getMovie().get(i).getCode());
+                                    nintBean.setId_7(value.getMovie().get(i).getId());
+                                    nintBean.setImg_url_7(value.getMovie().get(i).getImg_url());
+                                    nintBean.setNow_num_7(value.getMovie().get(i).getNow_num());
+                                    nintBean.setTotal_num_7(value.getMovie().get(i).getTotal_num());
+                                    nintBean.setName_7(value.getMovie().get(i).getName());
+                                    nintBean.setYear_7(value.getMovie().get(i).getYear());
+                                    break;
+                                case 7:
+                                    nintBean.setCode_8(value.getMovie().get(i).getCode());
+                                    nintBean.setId_8(value.getMovie().get(i).getId());
+                                    nintBean.setImg_url_8(value.getMovie().get(i).getImg_url());
+                                    nintBean.setNow_num_8(value.getMovie().get(i).getNow_num());
+                                    nintBean.setTotal_num_8(value.getMovie().get(i).getTotal_num());
+                                    nintBean.setName_8(value.getMovie().get(i).getName());
+                                    nintBean.setYear_8(value.getMovie().get(i).getYear());
+                                    break;
+                                case 8:
+                                    nintBean.setCode_9(value.getMovie().get(i).getCode());
+                                    nintBean.setId_9(value.getMovie().get(i).getId());
+                                    nintBean.setImg_url_9(value.getMovie().get(i).getImg_url());
+                                    nintBean.setNow_num_9(value.getMovie().get(i).getNow_num());
+                                    nintBean.setTotal_num_9(value.getMovie().get(i).getTotal_num());
+                                    nintBean.setName_9(value.getMovie().get(i).getName());
+                                    nintBean.setYear_9(value.getMovie().get(i).getYear());
+                                    break;
+
+                            }
+                        }
+                        mList.add(nintBean);
+                        YouShiNintBean nintBean1 = new YouShiNintBean();
+                        for (int i = 0; i < value.getTv().size(); i++) {
+                            switch (i) {
+                                case 0:
+                                    nintBean1.setCode_1(value.getTv().get(i).getCode());
+                                    nintBean1.setId_1(value.getTv().get(i).getId());
+                                    nintBean1.setImg_url_1(value.getTv().get(i).getImg_url());
+                                    nintBean1.setNow_num_1(value.getTv().get(i).getNow_num());
+                                    nintBean1.setTotal_num_1(value.getTv().get(i).getTotal_num());
+                                    nintBean1.setName_1(value.getTv().get(i).getName());
+                                    nintBean1.setYear_1(value.getTv().get(i).getYear());
+                                    break;
+                                case 1:
+                                    nintBean1.setCode_2(value.getTv().get(i).getCode());
+                                    nintBean1.setId_2(value.getTv().get(i).getId());
+                                    nintBean1.setImg_url_2(value.getTv().get(i).getImg_url());
+                                    nintBean1.setNow_num_2(value.getTv().get(i).getNow_num());
+                                    nintBean1.setTotal_num_2(value.getTv().get(i).getTotal_num());
+                                    nintBean1.setName_2(value.getTv().get(i).getName());
+                                    nintBean1.setYear_2(value.getTv().get(i).getYear());
+                                    break;
+                                case 2:
+                                    nintBean1.setCode_3(value.getTv().get(i).getCode());
+                                    nintBean1.setId_3(value.getTv().get(i).getId());
+                                    nintBean1.setImg_url_3(value.getTv().get(i).getImg_url());
+                                    nintBean1.setNow_num_3(value.getTv().get(i).getNow_num());
+                                    nintBean1.setTotal_num_3(value.getTv().get(i).getTotal_num());
+                                    nintBean1.setName_3(value.getTv().get(i).getName());
+                                    nintBean1.setYear_3(value.getTv().get(i).getYear());
+                                    break;
+                                case 3:
+                                    nintBean1.setCode_4(value.getTv().get(i).getCode());
+                                    nintBean1.setId_4(value.getTv().get(i).getId());
+                                    nintBean1.setImg_url_4(value.getTv().get(i).getImg_url());
+                                    nintBean1.setNow_num_4(value.getTv().get(i).getNow_num());
+                                    nintBean1.setTotal_num_4(value.getTv().get(i).getTotal_num());
+                                    nintBean1.setName_4(value.getTv().get(i).getName());
+                                    nintBean1.setYear_4(value.getTv().get(i).getYear());
+                                    break;
+                                case 4:
+                                    nintBean1.setCode_5(value.getTv().get(i).getCode());
+                                    nintBean1.setId_5(value.getTv().get(i).getId());
+                                    nintBean1.setImg_url_5(value.getTv().get(i).getImg_url());
+                                    nintBean1.setNow_num_5(value.getTv().get(i).getNow_num());
+                                    nintBean1.setTotal_num_5(value.getTv().get(i).getTotal_num());
+                                    nintBean1.setName_5(value.getTv().get(i).getName());
+                                    nintBean1.setYear_5(value.getTv().get(i).getYear());
+                                    break;
+                                case 5:
+                                    nintBean1.setCode_6(value.getTv().get(i).getCode());
+                                    nintBean1.setId_6(value.getTv().get(i).getId());
+                                    nintBean1.setImg_url_6(value.getTv().get(i).getImg_url());
+                                    nintBean1.setNow_num_6(value.getTv().get(i).getNow_num());
+                                    nintBean1.setTotal_num_6(value.getTv().get(i).getTotal_num());
+                                    nintBean1.setName_6(value.getTv().get(i).getName());
+                                    nintBean1.setYear_6(value.getTv().get(i).getYear());
+                                    break;
+                                case 6:
+                                    nintBean1.setCode_7(value.getTv().get(i).getCode());
+                                    nintBean1.setId_7(value.getTv().get(i).getId());
+                                    nintBean1.setImg_url_7(value.getTv().get(i).getImg_url());
+                                    nintBean1.setNow_num_7(value.getTv().get(i).getNow_num());
+                                    nintBean1.setTotal_num_7(value.getTv().get(i).getTotal_num());
+                                    nintBean1.setName_7(value.getTv().get(i).getName());
+                                    nintBean1.setYear_7(value.getTv().get(i).getYear());
+                                    break;
+                                case 7:
+                                    nintBean1.setCode_8(value.getTv().get(i).getCode());
+                                    nintBean1.setId_8(value.getTv().get(i).getId());
+                                    nintBean1.setImg_url_8(value.getTv().get(i).getImg_url());
+                                    nintBean1.setNow_num_8(value.getTv().get(i).getNow_num());
+                                    nintBean1.setTotal_num_8(value.getTv().get(i).getTotal_num());
+                                    nintBean1.setName_8(value.getTv().get(i).getName());
+                                    nintBean1.setYear_8(value.getTv().get(i).getYear());
+                                    break;
+                                case 8:
+                                    nintBean1.setCode_9(value.getTv().get(i).getCode());
+                                    nintBean1.setId_9(value.getTv().get(i).getId());
+                                    nintBean1.setImg_url_9(value.getTv().get(i).getImg_url());
+                                    nintBean1.setNow_num_9(value.getTv().get(i).getNow_num());
+                                    nintBean1.setTotal_num_9(value.getTv().get(i).getTotal_num());
+                                    nintBean1.setName_9(value.getTv().get(i).getName());
+                                    nintBean1.setYear_9(value.getTv().get(i).getYear());
+                                    break;
+                            }
+                        }
+                        mList.add(nintBean1);
+                        mYouShiNineAdapter = new YouShiNineAdapter(getContext(), R.layout.item_everyday_nith, mList);
+                        mYouShiNineAdapter.addHeaderView(mHeaderView);
+                        mYouShiNineAdapter.addFooterView(mFooterView);
+                        mRecyclerView.setAdapter(mYouShiNineAdapter);
                         showRotaLoading(false);
+
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        mRecyclerView.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                showError();
-                            }
-                        }, 3000);
+                        if (isZiDongGet) {
+                            Log.i(TAG, "请求数据失败: ");
+                            showError();
+                        } else {
+                            Log.i(TAG, "请求数据失败,自动获取IP一次 ");
+                            getNetworkIp();
+                            isZiDongGet = true;
+                        }
                     }
 
                     @Override
                     public void onComplete() {
-
-                    }
-                });
-
-    }
-
-    private void initData() {
-        HttpUtils.getInstance().getMyObservableClient().getBannerData()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<BannerDataBean>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-
-                    }
-
-                    @Override
-                    public void onNext(BannerDataBean value) {
-                        initBanner(value.getImgs(), value.getTitles(), value.getMovieIds(), value.getTypes());
-                        mIsFirst = false;
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        // initData();
-                    }
-
-                    @Override
-                    public void onComplete() {
-
                     }
                 });
     }
+
 
     private void initBanner(final String[] img, String[] titles, String[] id, String[] type) {
         final List<String> idList = Arrays.asList(id);
@@ -303,7 +470,7 @@ public class EverydayFragment extends BaseFragment<FragmentEverydayBinding> {
         mBanner.setOnBannerClickListener(new OnBannerClickListener() {
             @Override
             public void OnBannerClick(int position) {
-                MovieDetailActivity.start((Activity) getContext(), idList.get(position - 1), Arrays.asList(img).get(position - 1), null);
+                BaiDuMovieDetailActivity.start((Activity) getContext(), idList.get(position - 1), Arrays.asList(img).get(position - 1), null);
 
             }
         });
@@ -328,8 +495,11 @@ public class EverydayFragment extends BaseFragment<FragmentEverydayBinding> {
     protected void onRefresh() {
         showContentView();
         showRotaLoading(true);
-        initFirstData();
-//        loadData();
-        initData();
+        if (isGetNetwork) {
+            initFirstData(false);
+        } else {
+            getNetworkIp();
+        }
+
     }
 }

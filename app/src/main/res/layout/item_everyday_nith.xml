@@ -1,0 +1,640 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!--  <include
+              android:id="@+id/head_three"
+              layout="@layout/item_everyday_title"></include>-->
+        <LinearLayout
+            android:id="@+id/ll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <View
+                android:id="@+id/view_line"
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:background="@color/colorPageBg"
+                android:visibility="gone" />
+
+            <RelativeLayout
+                android:id="@+id/rl_title"
+                android:layout_width="match_parent"
+                android:layout_height="27dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="bottom"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/iv_title_9_type"
+                        android:layout_width="22dp"
+                        android:layout_height="22dp" />
+
+                    <TextView
+                        android:id="@+id/tv_title_9_type"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="2dp"
+                        android:textColor="@color/colorContent"
+                        android:textSize="16sp" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_title_9_more"
+                    android:layout_width="56dp"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="10dp"
+                    android:gravity="bottom|right"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="更多"
+                        android:textColor="@color/colorTabText"
+                        android:textSize="12sp" />
+
+                    <ImageView
+                        android:layout_width="14dp"
+                        android:layout_height="14dp"
+                        android:src="@drawable/home_arrow_right" />
+                </LinearLayout>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_marginTop="3dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:visibility="visible">
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="140dp">
+                        <ImageView
+                            android:id="@+id/iv_9_1"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/img_one_bi_one"
+                            android:scaleType="fitXY" />
+                        <TextView
+                            android:id="@+id/tv_9_count_1"
+                            android:background="#e0000000"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentBottom="true"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="12sp"
+                            android:visibility="gone"
+                            android:textColor="@color/white"
+                            android:text="更新至12集"/>
+                        <TextView
+                            android:id="@+id/tv_9_code_1"
+                            android:gravity="center"
+                            android:background="@drawable/baidu_top_code"
+                            android:layout_margin="3dp"
+                            android:layout_alignParentRight="true"
+                            android:textSize="12sp"
+                            android:layout_width="20dp"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/colorTheme"
+                            android:text="7.2"/>
+                    </RelativeLayout>
+
+
+                    <TextView
+                        android:id="@+id/tv_9_1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="1dp"
+                        android:layout_marginBottom="1dp"
+                        android:ellipsize="end"
+                        android:gravity="center"
+                        android:maxLines="2"
+                        android:text=""
+                        android:textColor="@color/colorContent"
+                        android:textSize="12sp" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="7dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/colorPageBg" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="140dp">
+                        <ImageView
+                            android:id="@+id/iv_9_2"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/img_one_bi_one"
+                            android:scaleType="fitXY" />
+                        <TextView
+                            android:id="@+id/tv_9_count_2"
+                            android:background="#e0000000"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentBottom="true"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="12sp"
+                            android:visibility="gone"
+                            android:textColor="@color/white"
+                            android:text="更新至12集"/>
+                        <TextView
+                            android:id="@+id/tv_9_code_2"
+                            android:gravity="center"
+                            android:background="@drawable/baidu_top_code"
+                            android:layout_margin="3dp"
+                            android:layout_alignParentRight="true"
+                            android:textSize="12sp"
+                            android:layout_width="20dp"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/colorTheme"
+                            android:text="7.2"/>
+                    </RelativeLayout>
+
+                    <TextView
+                        android:id="@+id/tv_9_2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="1dp"
+                        android:layout_marginBottom="1dp"
+                        android:ellipsize="end"
+                        android:gravity="center"
+                        android:maxLines="2"
+                        android:text=""
+                        android:textColor="@color/colorContent"
+                        android:textSize="12sp" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="7dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/colorPageBg" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="140dp">
+                        <ImageView
+                            android:id="@+id/iv_9_3"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/img_one_bi_one"
+                            android:scaleType="fitXY" />
+                        <TextView
+                            android:id="@+id/tv_9_count_3"
+                            android:background="#e0000000"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentBottom="true"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="12sp"
+                            android:visibility="gone"
+                            android:textColor="@color/white"
+                            android:text="更新至12集"/>
+                        <TextView
+                            android:id="@+id/tv_9_code_3"
+                            android:gravity="center"
+                            android:background="@drawable/baidu_top_code"
+                            android:layout_margin="3dp"
+                            android:layout_alignParentRight="true"
+                            android:textSize="12sp"
+                            android:layout_width="20dp"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/colorTheme"
+                            android:text="7.2"/>
+                    </RelativeLayout>
+
+                    <TextView
+                        android:id="@+id/tv_9_3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="1dp"
+                        android:layout_marginBottom="1dp"
+                        android:ellipsize="end"
+                        android:gravity="center"
+                        android:maxLines="2"
+                        android:textColor="@color/colorContent"
+                        android:textSize="12sp" />
+
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_marginTop="3dp"
+                android:id="@+id/ll_three_one"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:visibility="visible">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="140dp">
+                        <ImageView
+                            android:id="@+id/iv_9_4"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/img_one_bi_one"
+                            android:scaleType="fitXY" />
+                        <TextView
+                            android:visibility="gone"
+                            android:id="@+id/tv_9_count_4"
+                            android:background="#e0000000"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentBottom="true"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="12sp"
+                            android:textColor="@color/white"
+                            android:text="更新至12集"/>
+                        <TextView
+                            android:id="@+id/tv_9_code_4"
+                            android:gravity="center"
+                            android:background="@drawable/baidu_top_code"
+                            android:layout_margin="3dp"
+                            android:layout_alignParentRight="true"
+                            android:textSize="12sp"
+                            android:layout_width="20dp"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/colorTheme"
+                            android:text="7.2"/>
+                    </RelativeLayout>
+
+                    <TextView
+                        android:id="@+id/tv_9_4"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="1dp"
+                        android:layout_marginBottom="1dp"
+                        android:ellipsize="end"
+                        android:gravity="center"
+                        android:maxLines="2"
+                        android:text=""
+                        android:textColor="@color/colorContent"
+                        android:textSize="12sp" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="7dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/colorPageBg" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="140dp">
+                        <ImageView
+                            android:id="@+id/iv_9_5"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/img_one_bi_one"
+                            android:scaleType="fitXY" />
+                        <TextView
+                            android:visibility="gone"
+                            android:id="@+id/tv_9_count_5"
+                            android:background="#e0000000"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentBottom="true"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="12sp"
+                            android:textColor="@color/white"
+                            android:text="更新至12集"/>
+                        <TextView
+                            android:id="@+id/tv_9_code_5"
+                            android:gravity="center"
+                            android:background="@drawable/baidu_top_code"
+                            android:layout_margin="3dp"
+                            android:layout_alignParentRight="true"
+                            android:textSize="12sp"
+                            android:layout_width="20dp"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/colorTheme"
+                            android:text="7.2"/>
+                    </RelativeLayout>
+
+                    <TextView
+                        android:id="@+id/tv_9_5"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="1dp"
+                        android:layout_marginBottom="1dp"
+                        android:ellipsize="end"
+                        android:gravity="center"
+                        android:maxLines="2"
+                        android:text=""
+                        android:textColor="@color/colorContent"
+                        android:textSize="12sp" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="7dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/colorPageBg" />
+
+                <LinearLayout
+                    android:id="@+id/ll_three_one_three"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="140dp">
+                        <ImageView
+                            android:id="@+id/iv_9_6"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/img_one_bi_one"
+                            android:scaleType="fitXY" />
+                        <TextView
+                            android:visibility="gone"
+                            android:id="@+id/tv_9_count_6"
+                            android:background="#e0000000"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentBottom="true"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="12sp"
+                            android:textColor="@color/white"
+                            android:text="更新至12集"/>
+                        <TextView
+                            android:id="@+id/tv_9_code_6"
+                            android:gravity="center"
+                            android:background="@drawable/baidu_top_code"
+                            android:layout_margin="3dp"
+                            android:layout_alignParentRight="true"
+                            android:textSize="12sp"
+                            android:layout_width="20dp"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/colorTheme"
+                            android:text="7.2"/>
+                    </RelativeLayout>
+
+                    <TextView
+                        android:id="@+id/tv_9_6"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="1dp"
+                        android:layout_marginBottom="1dp"
+                        android:ellipsize="end"
+                        android:gravity="center"
+                        android:maxLines="2"
+                        android:textColor="@color/colorContent"
+                        android:textSize="12sp" />
+
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_marginTop="3dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:visibility="visible">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="140dp">
+                        <ImageView
+                            android:id="@+id/iv_9_7"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/img_one_bi_one"
+                            android:scaleType="fitXY" />
+                        <TextView
+                            android:visibility="gone"
+                            android:id="@+id/tv_9_count_7"
+                            android:background="#e0000000"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentBottom="true"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="12sp"
+                            android:textColor="@color/white"
+                            android:text="更新至12集"/>
+                        <TextView
+                            android:id="@+id/tv_9_code_7"
+                            android:gravity="center"
+                            android:background="@drawable/baidu_top_code"
+                            android:layout_margin="3dp"
+                            android:layout_alignParentRight="true"
+                            android:textSize="12sp"
+                            android:layout_width="20dp"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/colorTheme"
+                            android:text="7.2"/>
+                    </RelativeLayout>
+
+                    <TextView
+                        android:id="@+id/tv_9_7"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="1dp"
+                        android:layout_marginBottom="1dp"
+                        android:ellipsize="end"
+                        android:gravity="center"
+                        android:maxLines="2"
+                        android:text=""
+                        android:textColor="@color/colorContent"
+                        android:textSize="12sp" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="7dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/colorPageBg" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="140dp">
+                        <ImageView
+                            android:id="@+id/iv_9_8"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/img_one_bi_one"
+                            android:scaleType="fitXY" />
+                        <TextView
+                            android:visibility="gone"
+                            android:id="@+id/tv_9_count_8"
+                            android:background="#e0000000"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentBottom="true"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="12sp"
+                            android:textColor="@color/white"
+                            android:text="更新至12集"/>
+                        <TextView
+                            android:id="@+id/tv_9_code_8"
+                            android:gravity="center"
+                            android:background="@drawable/baidu_top_code"
+                            android:layout_margin="3dp"
+                            android:layout_alignParentRight="true"
+                            android:textSize="12sp"
+                            android:layout_width="20dp"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/colorTheme"
+                            android:text="7.2"/>
+                    </RelativeLayout>
+
+                    <TextView
+                        android:id="@+id/tv_9_8"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="1dp"
+                        android:layout_marginBottom="1dp"
+                        android:ellipsize="end"
+                        android:gravity="center"
+                        android:maxLines="2"
+                        android:text=""
+                        android:textColor="@color/colorContent"
+                        android:textSize="12sp" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="7dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/colorPageBg" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="140dp">
+                        <ImageView
+                            android:id="@+id/iv_9_9"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/img_one_bi_one"
+                            android:scaleType="fitXY" />
+                        <TextView
+                            android:visibility="gone"
+                            android:id="@+id/tv_9_count_9"
+                            android:background="#e0000000"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentBottom="true"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="12sp"
+                            android:textColor="@color/white"
+                            android:text="更新至12集"/>
+                        <TextView
+                            android:id="@+id/tv_9_code_9"
+                            android:gravity="center"
+                            android:background="@drawable/baidu_top_code"
+                            android:layout_margin="3dp"
+                            android:layout_alignParentRight="true"
+                            android:textSize="12sp"
+                            android:layout_width="20dp"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/colorTheme"
+                            android:text="7.2"/>
+                    </RelativeLayout>
+
+                    <TextView
+                        android:id="@+id/tv_9_9"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="1dp"
+                        android:layout_marginBottom="1dp"
+                        android:ellipsize="end"
+                        android:gravity="center"
+                        android:maxLines="2"
+                        android:textColor="@color/colorContent"
+                        android:textSize="12sp" />
+
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</layout>

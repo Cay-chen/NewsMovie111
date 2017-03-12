@@ -162,6 +162,8 @@
             android:screenOrientation="portrait" />
         <activity android:name="com.example.cay.youshi.ui.activity.PlayRecordCActivity"
             android:screenOrientation="portrait"/>
+        <activity android:name="com.example.cay.youshi.ui.activity.BaiDuMovieDetailActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>
