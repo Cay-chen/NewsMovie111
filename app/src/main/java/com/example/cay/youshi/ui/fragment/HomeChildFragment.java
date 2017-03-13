@@ -1,7 +1,9 @@
 package com.example.cay.youshi.ui.fragment;
 
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -16,16 +18,16 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.cay.youshi.R;
-import com.example.cay.youshi.bean.SingleLookupResultBean;
-import com.example.cay.youshi.bean.YouShiMovieDealisBean;
-import com.example.cay.youshi.ui.activity.MovieDetailActivity;
 import com.example.cay.youshi.adapter.MovieAdapter;
 import com.example.cay.youshi.base.adapter.BaseFragment;
-import com.example.cay.youshi.bean.MovieDataBean;
-import com.example.cay.youshi.bean.MovieTopbarBean;
+import com.example.cay.youshi.bean.SingleLookupResultBean;
+import com.example.cay.youshi.bean.YouShiMovieDealisBean;
+import com.example.cay.youshi.bean.YouShiTopbar;
+import com.example.cay.youshi.bean.YouShiTopbarResultBean;
 import com.example.cay.youshi.databinding.FragmentMovieBinding;
 import com.example.cay.youshi.databinding.HeaderMovieItemBinding;
 import com.example.cay.youshi.http.HttpUtils;
+import com.example.cay.youshi.ui.activity.BaiDuMovieDetailActivity;
 
 import java.util.List;
 
@@ -55,6 +57,8 @@ public class HomeChildFragment extends BaseFragment<FragmentMovieBinding> implem
     private String nameId;
     private String topbar;
     private String type;
+    private String type_ad;
+    private String ad_url;
     private static final String TAG = "Cay";
 
     @Override
@@ -72,8 +76,14 @@ public class HomeChildFragment extends BaseFragment<FragmentMovieBinding> implem
         mHeadImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!img_url.isEmpty()) {
-                    MovieDetailActivity.start(getActivity(), nameId, img_url, null);
+                if (img_url!=null&&!img_url.equals("")) {
+                    if (type_ad.equals("1")) {
+                        BaiDuMovieDetailActivity.start(getActivity(), nameId, img_url, null);
+                    } else {
+                        Intent intent = new Intent(Intent.ACTION_VIEW);
+                        intent.setData(Uri.parse(ad_url.trim()));
+                        getContext().startActivity(intent);
+                    }
                 }
             }
         });
@@ -114,30 +124,42 @@ public class HomeChildFragment extends BaseFragment<FragmentMovieBinding> implem
     }
 
     private void loadTopbarData() {
-        HttpUtils.getInstance().getMyObservableClient().getTopBarData(topbar).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<List<MovieTopbarBean>>() {
+        Log.i(TAG, "loadTopbarData: "+topbar);
+        HttpUtils.getInstance().getYouShiData(false).getTopbar(topbar)
+                .map(new Function<YouShiTopbarResultBean, YouShiTopbar>() {
+                    @Override
+                    public YouShiTopbar apply(YouShiTopbarResultBean youShiTopbarResultBean) throws Exception {
+                        return youShiTopbarResultBean.getResult();
+                    }
+                })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<YouShiTopbar>() {
             @Override
             public void onSubscribe(Disposable d) {
-
+                Log.i(TAG, "onSubscribe: ");
             }
 
             @Override
-            public void onNext(List<MovieTopbarBean> list) {
-                MovieTopbarBean movieTopbarBean = list.get(0);
-                img_url = movieTopbarBean.getImg_url();
-                nameId = movieTopbarBean.getMovie_id();
-                Glide.with(getContext()).load(movieTopbarBean.getImg_url()).into(mHeadImageView);
-                mHeadTextView1.setText(movieTopbarBean.getName());
-                mHeadTextView2.setText(movieTopbarBean.getTitle());
+            public void onNext(YouShiTopbar bean) {
+                Log.i(TAG, "YouShiTopbar: " + bean);
+                img_url = bean.getImg_url();
+                nameId = bean.getMovie_id();
+                type_ad = bean.getType_ad();
+                ad_url = bean.getAd_url();
+                Glide.with(getContext()).load(bean.getImg_url()).into(mHeadImageView);
+                mHeadTextView1.setText(bean.getName());
+                mHeadTextView2.setText(bean.getTitle());
             }
 
             @Override
             public void onError(Throwable e) {
-
+                Log.i(TAG, "onError: ");
             }
 
             @Override
             public void onComplete() {
-
+                Log.i(TAG, "onComplete: ");
             }
         });
     }
@@ -157,7 +179,6 @@ public class HomeChildFragment extends BaseFragment<FragmentMovieBinding> implem
     }
 
     private void httpGetData(final String position1, String num, final boolean first, final boolean isResfres) {
-        Log.i(TAG, "httpGetData: "+position1);
         HttpUtils.getInstance().getYouShiData(false).oneLookupResult(type, position1, num)
                 .map(new Function<SingleLookupResultBean, List<YouShiMovieDealisBean>>() {
                     @Override
@@ -174,13 +195,14 @@ public class HomeChildFragment extends BaseFragment<FragmentMovieBinding> implem
 
                     @Override
                     public void onNext(List<YouShiMovieDealisBean> list) {
-                        Log.i(TAG, "onNext: "+list);
                         if (first) {
                             initAdapter(list);
                         } else {
                             if (isResfres) {
                                 movieAdapter.setNewData(list);
-                                position = list.get(list.size()-1).getMovie_count();
+                                if (list.size() > 1) {
+                                    position = list.get(list.size()-1).getMovie_count();
+                                }
                                 if (list.size() < 15) {
                                     movieAdapter.loadMoreEnd(true);
                                 }
@@ -235,7 +257,7 @@ public class HomeChildFragment extends BaseFragment<FragmentMovieBinding> implem
         if (isFirst) {
             httpGetData(position, FIRST_NUM, true, false);
         } else {
-            position = "0";
+            position = "10000000000";
             httpGetData(position, FIRST_NUM, false, true);
         }
 

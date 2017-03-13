@@ -14,6 +14,7 @@ import com.example.cay.youshi.bean.VersionUpdataBean;
 import com.example.cay.youshi.bean.WeiXinBackBean;
 import com.example.cay.youshi.bean.YouShiFirstDataBean;
 import com.example.cay.youshi.bean.YouShiMovieDealisBean;
+import com.example.cay.youshi.bean.YouShiTopbarResultBean;
 
 import java.util.List;
 
@@ -263,10 +264,16 @@ public interface RetrofitHttpClient {
      * @param num  查询 数量
      * @return 返回类型
      */
-    @GET("/YouShiServer/movieTopBarData")
+    @GET("/YouShiServer/SingleLookupData")
     Observable<SingleLookupResultBean> oneLookupResult(@Query("type") String type, @Query("position") String position, @Query("num") String num);
 
-
+    /**
+     * 优视 单个条件准确查询
+     * @param type 类型
+     * @return 返回类型
+     */
+    @GET("/YouShiServer/movieTopBarData")
+    Observable<YouShiTopbarResultBean> getTopbar(@Query("type") String type);
 
 
 }

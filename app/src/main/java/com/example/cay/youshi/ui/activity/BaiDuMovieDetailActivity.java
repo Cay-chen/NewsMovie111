@@ -119,9 +119,12 @@ public class BaiDuMovieDetailActivity extends BaseHeaderActivity<HeaderSlideShap
         bindingContentView.btnYoushiMovieDetail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Intent.ACTION_VIEW);
-                intent.setData(Uri.parse(subjectsBean.getBaidu_url().trim()));
-                startActivity(intent);
+                if (subjectsBean.getBaidu_url().trim() != null) {
+                    Intent intent = new Intent(Intent.ACTION_VIEW);
+                    intent.setData(Uri.parse(subjectsBean.getBaidu_url().trim()));
+                    startActivity(intent);
+                }
+
             }
         });
     }

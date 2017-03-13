@@ -9,7 +9,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -21,7 +20,6 @@ import android.widget.Toast;
 
 import com.example.cay.youshi.R;
 import com.example.cay.youshi.adapter.MovieDetailsAdapter;
-import com.example.cay.youshi.bean.MovieDataBean;
 import com.example.cay.youshi.bean.SingleLookupResultBean;
 import com.example.cay.youshi.bean.YouShiMovieDealisBean;
 import com.example.cay.youshi.databinding.ActivitySearchMovieBinding;
@@ -37,11 +35,9 @@ import io.reactivex.schedulers.Schedulers;
 
 public class SearchMovieActivity extends AppCompatActivity implements SearchView.OnQueryTextListener, View.OnTouchListener {
     private ActivitySearchMovieBinding movieBinding;
-    private Toolbar mToolbar;
     private SearchView mSearchView;
     private InputMethodManager mImm;
     private RecyclerView mRecyclerView;
-    private static final String TAG = "Cay";
     private MovieDetailsAdapter mMovieDetailsAdapter;
     private View notDataView;
     private View errorView;
@@ -53,7 +49,7 @@ public class SearchMovieActivity extends AppCompatActivity implements SearchView
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         movieBinding = DataBindingUtil.setContentView(this, R.layout.activity_search_movie);
-        mToolbar = movieBinding.searchMovieToolbar;
+        Toolbar mToolbar = movieBinding.searchMovieToolbar;
         setSupportActionBar(mToolbar);
         getSupportActionBar().setLogo(R.drawable.icon_back);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -64,7 +60,11 @@ public class SearchMovieActivity extends AppCompatActivity implements SearchView
         notDataView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                searchMovieDataHttp(mSearchView.getQuery().toString());
+                if (mSearchView.getQuery().toString().trim().equals("")) {
+                    Toast.makeText(SearchMovieActivity.this, R.string.search_err, Toast.LENGTH_SHORT).show();
+                } else {
+                    searchMovieDataHttp(mSearchView.getQuery().toString().trim());
+                }
 
             }
         });
@@ -72,10 +72,10 @@ public class SearchMovieActivity extends AppCompatActivity implements SearchView
         errorView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mSearchView.getQuery().toString().trim().isEmpty()) {
-                    Log.i(TAG, "请输入收索内容: ");
+                if (mSearchView.getQuery().toString().trim().equals("")) {
+                    Toast.makeText(SearchMovieActivity.this, R.string.search_err, Toast.LENGTH_SHORT).show();
                 } else {
-                    searchMovieDataHttp(mSearchView.getQuery().toString());
+                    searchMovieDataHttp(mSearchView.getQuery().toString().trim());
 
                 }
 
@@ -125,11 +125,7 @@ public class SearchMovieActivity extends AppCompatActivity implements SearchView
 
     @Override
     public boolean onQueryTextSubmit(String query) {
-        if (query.trim().isEmpty()) {
-            Toast.makeText(SearchMovieActivity.this, "请输入收索内容", Toast.LENGTH_LONG).show();
-
-        }
-        searchMovieDataHttp(mSearchView.getQuery().toString());
+        searchMovieDataHttp(mSearchView.getQuery().toString().trim());
         return false;
     }
 
@@ -152,6 +148,7 @@ public class SearchMovieActivity extends AppCompatActivity implements SearchView
             mSearchView.clearFocus();
         }
     }
+
     public void searchMovieDataHttp(final String name) {
         mMovieDetailsAdapter.setNewData(null);
         mMovieDetailsAdapter.setEmptyView(R.layout.loading_view, (ViewGroup) mRecyclerView.getParent());
@@ -159,7 +156,7 @@ public class SearchMovieActivity extends AppCompatActivity implements SearchView
         mRecyclerView.postDelayed(new Runnable() {
             @Override
             public void run() {
-                HttpUtils.getInstance().getYouShiData(false).singleLookupResult("name",name,"0","30")
+                HttpUtils.getInstance().getYouShiData(false).singleLookupResult("name", name, "0", "30")
                         .map(new Function<SingleLookupResultBean, List<YouShiMovieDealisBean>>() {
                             @Override
                             public List<YouShiMovieDealisBean> apply(SingleLookupResultBean singleLookupResultBean) throws Exception {
@@ -178,7 +175,7 @@ public class SearchMovieActivity extends AppCompatActivity implements SearchView
                                 if (list.size() == 0) {
                                     mMovieDetailsAdapter.setEmptyView(notDataView);
                                 } else {
-                                    title.setText("搜索到与“"+name+"”相关视频" + list.size() + "个");
+                                    title.setText("搜索到与“" + name + "”相关视频" + list.size() + "个");
                                     mMovieDetailsAdapter.setNewData(list);
                                 }
                             }
