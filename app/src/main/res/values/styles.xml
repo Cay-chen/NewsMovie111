@@ -43,7 +43,13 @@
         <item name="titleTextAppearance">@style/ToolBar.Title</item>
         <item name="subtitleTextAppearance">@style/Toolbar.SubTitle</item>
         <item name="android:windowNoTitle">true</item>
+        <item name="android:dropDownListViewStyle">@style/AppDropDownListViewStyle</item>
         <!--<item name="android:textSize">18sp</item> &lt;!&ndash;  搞掂字体大小&ndash;&gt;-->
+    </style>
+    <style name="AppDropDownListViewStyle" parent="Widget.AppCompat.ListView.DropDown">
+        <item name="android:showDividers">middle</item>
+        <item name="android:divider">@drawable/black_background</item>
+        <item name="android:dividerHeight">1dp</item>
     </style>
     <!--titlebar 标题-->
     <style name="ToolBar.Title" parent="@style/TextAppearance.Widget.AppCompat.Toolbar.Title">

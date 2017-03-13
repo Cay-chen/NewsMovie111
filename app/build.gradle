@@ -14,6 +14,11 @@ android {
             // 设置支持的SO库架构
             abiFilters 'armeabi' , 'x86', 'armeabi-v7a', 'x86_64', 'arm64-v8a'
         }
+
+      /*  //为了开启JAVA8
+        jackOptions{
+            enabled true;
+        }*/
     }
     buildTypes {
         release {
@@ -28,7 +33,13 @@ android {
             shrinkResources true
 
         }
+
     }
+    /*//开启JAVA1.8 能够用lambad表达式
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }*/
     // dataBinding 加入
     dataBinding {
         enabled = true

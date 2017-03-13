@@ -9,4 +9,9 @@
         android:orderInCategory="100"
         android:title="@string/actionbar_more"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/actionbar_copy"
+        android:orderInCategory="100"
+        android:title="@string/actionbar_copy"
+        app:showAsAction="never" />
 </menu>

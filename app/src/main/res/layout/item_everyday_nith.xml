@@ -6,9 +6,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <!--  <include
-              android:id="@+id/head_three"
-              layout="@layout/item_everyday_title"></include>-->
         <LinearLayout
             android:id="@+id/ll"
             android:layout_width="match_parent"
@@ -108,7 +105,8 @@
                             android:scaleType="fitXY" />
                         <TextView
                             android:id="@+id/tv_9_count_1"
-                            android:background="#e0000000"
+                            android:background="#6000"
+                            android:padding="2dp"
                             android:layout_alignParentRight="true"
                             android:layout_alignParentBottom="true"
                             android:layout_width="wrap_content"
@@ -168,7 +166,8 @@
                             android:scaleType="fitXY" />
                         <TextView
                             android:id="@+id/tv_9_count_2"
-                            android:background="#e0000000"
+                            android:background="#6000"
+                            android:padding="2dp"
                             android:layout_alignParentRight="true"
                             android:layout_alignParentBottom="true"
                             android:layout_width="wrap_content"
@@ -227,7 +226,8 @@
                             android:scaleType="fitXY" />
                         <TextView
                             android:id="@+id/tv_9_count_3"
-                            android:background="#e0000000"
+                            android:background="#6000"
+                            android:padding="2dp"
                             android:layout_alignParentRight="true"
                             android:layout_alignParentBottom="true"
                             android:layout_width="wrap_content"
@@ -296,7 +296,8 @@
                         <TextView
                             android:visibility="gone"
                             android:id="@+id/tv_9_count_4"
-                            android:background="#e0000000"
+                            android:background="#6000"
+                            android:padding="2dp"
                             android:layout_alignParentRight="true"
                             android:layout_alignParentBottom="true"
                             android:layout_width="wrap_content"
@@ -355,7 +356,8 @@
                         <TextView
                             android:visibility="gone"
                             android:id="@+id/tv_9_count_5"
-                            android:background="#e0000000"
+                            android:background="#6000"
+                            android:padding="2dp"
                             android:layout_alignParentRight="true"
                             android:layout_alignParentBottom="true"
                             android:layout_width="wrap_content"
@@ -415,7 +417,8 @@
                         <TextView
                             android:visibility="gone"
                             android:id="@+id/tv_9_count_6"
-                            android:background="#e0000000"
+                            android:background="#6000"
+                            android:padding="2dp"
                             android:layout_alignParentRight="true"
                             android:layout_alignParentBottom="true"
                             android:layout_width="wrap_content"
@@ -482,7 +485,8 @@
                         <TextView
                             android:visibility="gone"
                             android:id="@+id/tv_9_count_7"
-                            android:background="#e0000000"
+                            android:background="#6000"
+                            android:padding="2dp"
                             android:layout_alignParentRight="true"
                             android:layout_alignParentBottom="true"
                             android:layout_width="wrap_content"
@@ -541,7 +545,8 @@
                         <TextView
                             android:visibility="gone"
                             android:id="@+id/tv_9_count_8"
-                            android:background="#e0000000"
+                            android:background="#6000"
+                            android:padding="2dp"
                             android:layout_alignParentRight="true"
                             android:layout_alignParentBottom="true"
                             android:layout_width="wrap_content"
@@ -600,7 +605,8 @@
                         <TextView
                             android:visibility="gone"
                             android:id="@+id/tv_9_count_9"
-                            android:background="#e0000000"
+                            android:background="#6000"
+                            android:padding="2dp"
                             android:layout_alignParentRight="true"
                             android:layout_alignParentBottom="true"
                             android:layout_width="wrap_content"

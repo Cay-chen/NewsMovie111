@@ -1,5 +1,7 @@
 package com.example.cay.youshi.base;
 
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.graphics.Color;
@@ -164,11 +166,15 @@ public abstract class BaseHeaderActivity<HV extends ViewDataBinding, SV extends 
     }
 
     /**
-     * 3. toolbar 单击"更多信息"
+     * 3. toolbar 单击"分享"
      */
-    protected void setTitleClickMore() {
+    protected void setShareItem() {
     }
-
+    /**
+     * 3. toolbar 单击"复制"
+     */
+    protected void setCopyItem() {
+    }
     /**
      * 设置toolbar
      */
@@ -185,7 +191,7 @@ public abstract class BaseHeaderActivity<HV extends ViewDataBinding, SV extends 
         bindingTitleView.tbBaseTitle.setTitleTextAppearance(this, R.style.ToolBar_Title);
         bindingTitleView.tbBaseTitle.setSubtitleTextAppearance(this, R.style.Toolbar_SubTitle);
         bindingTitleView.tbBaseTitle.inflateMenu(R.menu.base_header_menu);
-        bindingTitleView.tbBaseTitle.setOverflowIcon(ContextCompat.getDrawable(this, R.drawable.actionbar_share));
+       // bindingTitleView.tbBaseTitle.setOverflowIcon(ContextCompat.getDrawable(this, R.drawable.actionbar_share));
         bindingTitleView.tbBaseTitle.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -197,7 +203,10 @@ public abstract class BaseHeaderActivity<HV extends ViewDataBinding, SV extends 
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.actionbar_more:// 更多信息
-                        setTitleClickMore();
+                        setShareItem();
+                        break;
+                    case R.id.actionbar_copy:
+                        setCopyItem();
                         break;
                 }
                 return false;

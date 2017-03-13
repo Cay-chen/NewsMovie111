@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.databinding.DataBindingUtil;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -125,7 +126,7 @@ public class EverydayFragment extends BaseFragment<FragmentEverydayBinding> {
         imb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                RxBus.getDefault().send(RxCodeConstants.JUMP_TYPE_TO_ONE, new RxBusBaseMessage());
+                //RxBus.getDefault().send(RxCodeConstants.JUMP_TYPE_TO_ONE, new RxBusBaseMessage());
 
             }
         });
@@ -232,6 +233,7 @@ public class EverydayFragment extends BaseFragment<FragmentEverydayBinding> {
                     @Override
                     public void onNext(YouShiFirstDataBean value) {
                         Log.i(TAG, "请求数据成功: ");
+                        RxBus.getDefault().send(RxCodeConstants.JUMP_TYPE_TO_ONE, value.getAlmm_url());
                         /**************获取banner数据****************************/
                         String[] bannerTitle = new String[value.getBanners().size()];
                         String[] bannerImg = new String[value.getBanners().size()];
@@ -448,7 +450,7 @@ public class EverydayFragment extends BaseFragment<FragmentEverydayBinding> {
     }
 
 
-    private void initBanner(final String[] img, String[] titles, String[] id, String[] type) {
+    private void initBanner(final String[] img, final String[] titles, final String[] id, final String[] type) {
         final List<String> idList = Arrays.asList(id);
         Banner mBanner = mHeaderBinding.banner;
         //设置banner样式
@@ -470,7 +472,13 @@ public class EverydayFragment extends BaseFragment<FragmentEverydayBinding> {
         mBanner.setOnBannerClickListener(new OnBannerClickListener() {
             @Override
             public void OnBannerClick(int position) {
-                BaiDuMovieDetailActivity.start((Activity) getContext(), idList.get(position - 1), Arrays.asList(img).get(position - 1), null);
+                if (type[position - 1].equals("1")) {
+                    BaiDuMovieDetailActivity.start((Activity) getContext(), idList.get(position - 1), Arrays.asList(img).get(position - 1), null);
+                } else {
+                    Intent intent = new Intent(Intent.ACTION_VIEW);
+                    intent.setData(Uri.parse(titles[position - 1]));
+                    getContext().startActivity(intent);
+                }
 
             }
         });

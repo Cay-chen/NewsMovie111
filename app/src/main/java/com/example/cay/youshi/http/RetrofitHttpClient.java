@@ -8,6 +8,7 @@ import com.example.cay.youshi.bean.IssueBean;
 import com.example.cay.youshi.bean.MovieDataBean;
 import com.example.cay.youshi.bean.MovieTopbarBean;
 import com.example.cay.youshi.bean.NewsBackDataBean;
+import com.example.cay.youshi.bean.SingleLookupResultBean;
 import com.example.cay.youshi.bean.UpDdtaBackBean;
 import com.example.cay.youshi.bean.VersionUpdataBean;
 import com.example.cay.youshi.bean.WeiXinBackBean;
@@ -229,10 +230,44 @@ public interface RetrofitHttpClient {
     @GET("VMovie/ServerGetCommentData")
     Observable<List<CommentDataBean>> getCommentData(@Query("name")String name, @Query("position") String position, @Query("num") String num);
 
+    /**
+     * 获取首页数据
+     * @return xx
+     */
     @GET("/YouShiServer/FirstData")
     Observable<YouShiFirstDataBean> getYouShiFirstData();
 
+    /**
+     * 获取电影详情
+     * @param id s
+     * @return s
+     */
     @GET("/YouShiServer/MovieDetail")
     Observable<YouShiMovieDealisBean> getYouShiMovieDetail(@Query("id") String id);
+
+    /**
+     * 优视 单个条件模糊查询
+     * @param type 类型
+     * @param value 类型值
+     * @param position 起始位置
+     * @param num  查询 数量
+     * @return 返回类型
+     */
+    @GET("/YouShiServer/SingleVagueLookup")
+    Observable<SingleLookupResultBean> singleLookupResult(@Query("type") String type, @Query("value") String value, @Query("position") String position, @Query("num") String num);
+
+    /**
+     * 优视 单个条件准确查询
+     * @param type 类型
+     * @param position 起始位置
+     * @param num  查询 数量
+     * @return 返回类型
+     */
+    @GET("/YouShiServer/movieTopBarData")
+    Observable<SingleLookupResultBean> oneLookupResult(@Query("type") String type, @Query("position") String position, @Query("num") String num);
+
+
+
+
 }
 

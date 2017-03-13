@@ -2,6 +2,7 @@ package com.example.cay.youshi;
 
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -29,6 +30,9 @@ import com.example.cay.youshi.bean.UpDdtaBackBean;
 import com.example.cay.youshi.bean.VersionUpdataBean;
 import com.example.cay.youshi.databinding.ActivityMainBinding;
 import com.example.cay.youshi.http.HttpUtils;
+import com.example.cay.youshi.http.RxBus.RxBus;
+import com.example.cay.youshi.http.RxBus.RxBusBaseMessage;
+import com.example.cay.youshi.http.RxBus.RxCodeConstants;
 import com.example.cay.youshi.statusbar.StatusBarUtil;
 import com.example.cay.youshi.ui.activity.SearchMovieActivity;
 import com.example.cay.youshi.ui.fragment.MeFragment;
@@ -49,6 +53,7 @@ import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 
@@ -65,6 +70,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ViewPager vpContent;
     private FloatingActionButton mFl;
     private static final String TAG = "Cay";
+    private CompositeDisposable disposable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,12 +83,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         initListener();
         Connector.getDatabase();
         versionUpdateJianCe();
+        initRxBus();
        // MiPushClient.setAlias(this,"0510016",null);
         upCountLogin();
       //  RefWatcher refWatcher = LeakCanary.install(MainActivity.class);
 
     }
-
     private void initVivws() {
         navView = mBinding.navView;
         llTitleMenu = mBinding.include.llTitleMenu;
@@ -250,6 +256,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onPageScrollStateChanged(int state) {
 
     }
+    /**
+     * 每日推荐点击"新电影热映榜"跳转
+     */
+    private void initRxBus() {
+        disposable = new CompositeDisposable();
+        disposable.add(RxBus.getDefault().toObservable(RxCodeConstants.JUMP_TYPE_TO_ONE, String.class)
+                .subscribe(new Consumer() {
+                    @Override
+                    public void accept(final Object o) throws Exception {
+                        mFl.setVisibility(View.VISIBLE);
+                        mFl.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent intent = new Intent(Intent.ACTION_VIEW);
+                                intent.setData(Uri.parse((String)o));
+                                startActivity(intent);
+                            }
+                        });
+                    }
+                }));
+    }
 
 
 
@@ -371,5 +398,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        disposable.clear();
     }
 }

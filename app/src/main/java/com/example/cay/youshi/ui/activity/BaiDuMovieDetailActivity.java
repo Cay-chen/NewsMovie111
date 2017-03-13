@@ -1,6 +1,8 @@
 package com.example.cay.youshi.ui.activity;
 
 import android.app.Activity;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -10,6 +12,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.cay.youshi.R;
@@ -43,6 +46,7 @@ public class BaiDuMovieDetailActivity extends BaseHeaderActivity<HeaderSlideShap
     private String movieId;
     private String img_url;
     private String name;
+    private String baidu_url;
     private static final String TAG = "Cay";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +77,6 @@ public class BaiDuMovieDetailActivity extends BaseHeaderActivity<HeaderSlideShap
 
                     @Override
                     public void onNext(YouShiMovieDealisBean bean) {
-                        Log.i(TAG, "onNext: "+bean);
                         setAllData(bean);
                         showContentView();
                     }
@@ -94,6 +97,7 @@ public class BaiDuMovieDetailActivity extends BaseHeaderActivity<HeaderSlideShap
         name = subjectsBean.getName();
         initSlideShapeTheme(setHeaderImgUrl(), setHeaderImageView());
         setTitle(name);
+        baidu_url = subjectsBean.getBaidu_url();
         setSubTitle(String.format("主演：%s", subjectsBean.getAct()));
         bindingHeaderView.tvOneRatingRate.setText(this.getResources().getString(R.string.string_rating) + subjectsBean.getCode());
         bindingHeaderView.tvOneCasts.setText(subjectsBean.getAct());
@@ -126,9 +130,17 @@ public class BaiDuMovieDetailActivity extends BaseHeaderActivity<HeaderSlideShap
 
 
     @Override
-    protected void setTitleClickMore() {
+    protected void setShareItem() {
         ShareUtils.share(this, "正在使用V视观看【" + name + "】 下载V视地址:https://fir.im/vision");
 
+    }
+
+    @Override
+    protected void setCopyItem() {
+        ClipboardManager cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+        // 将文本内容放到系统剪贴板里。
+        cm.setText(baidu_url);
+        Toast.makeText(this, "复制成功", Toast.LENGTH_LONG).show();
     }
 
     @Override

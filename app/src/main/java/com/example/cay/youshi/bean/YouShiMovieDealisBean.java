@@ -5,6 +5,7 @@ package com.example.cay.youshi.bean;
  */
 
 public class YouShiMovieDealisBean {
+    private String movie_count; //数据ID
     private String id;  //电影id
     private String name;// 电影名字
     private String now_num;//当前集数
@@ -22,6 +23,14 @@ public class YouShiMovieDealisBean {
     private String img_url;// 图片地址
     private String up_time;// 上传时间
     private String log;// 简介
+
+    public String getMovie_count() {
+        return movie_count;
+    }
+
+    public void setMovie_count(String movie_count) {
+        this.movie_count = movie_count;
+    }
 
     public String getId() {
         return id;
@@ -162,7 +171,8 @@ public class YouShiMovieDealisBean {
     @Override
     public String toString() {
         return "YouShiMovieDealisBean{" +
-                "id='" + id + '\'' +
+                "movie_count='" + movie_count + '\'' +
+                ", id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 ", now_num='" + now_num + '\'' +
                 ", total_num='" + total_num + '\'' +

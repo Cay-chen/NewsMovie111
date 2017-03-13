@@ -93,6 +93,7 @@
                 android:background="@mipmap/fuli"
                 app:borderWidth="0dp"
                 app:fabSize="auto"
+                android:visibility="gone"
                 android:layout_margin="@dimen/fab_margin" />
 
         </FrameLayout>

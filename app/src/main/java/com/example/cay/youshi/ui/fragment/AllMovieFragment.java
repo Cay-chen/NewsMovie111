@@ -300,7 +300,7 @@ public class AllMovieFragment extends BaseFragment<FragmentOneBinding> implement
 
                             @Override
                             public void onNext(List<MovieDataBean> list) {
-                                successHander(isRefresh, list);
+                            ///    successHander(isRefresh, list);
                             }
 
                             @Override
@@ -330,7 +330,7 @@ public class AllMovieFragment extends BaseFragment<FragmentOneBinding> implement
 
                             @Override
                             public void onNext(List<MovieDataBean> list) {
-                                successHander(isRefresh, list);
+                                //successHander(isRefresh, list);
                             }
 
                             @Override
@@ -361,7 +361,7 @@ public class AllMovieFragment extends BaseFragment<FragmentOneBinding> implement
 
                         @Override
                         public void onNext(List<MovieDataBean> list) {
-                            successHander(isRefresh, list);
+                            //successHander(isRefresh, list);
                         }
 
                         @Override
@@ -381,11 +381,11 @@ public class AllMovieFragment extends BaseFragment<FragmentOneBinding> implement
         }
     }
 
-    /**
+  /*  *//**
      * 数据请求成功后处理操作
      * @param isRefresh 是否刷新
      * @param list 数据
-     */
+     *//*
     public void successHander(boolean isRefresh, List<MovieDataBean> list) {
         if (isFirst) {
             nowPosition = String.valueOf(list.size());
@@ -412,6 +412,6 @@ public class AllMovieFragment extends BaseFragment<FragmentOneBinding> implement
             }
         }
 
-    }
+    }*/
 
 }

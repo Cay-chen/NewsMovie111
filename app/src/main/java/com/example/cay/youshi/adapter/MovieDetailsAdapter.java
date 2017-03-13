@@ -10,6 +10,8 @@ import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.example.cay.youshi.R;
+import com.example.cay.youshi.bean.YouShiMovieDealisBean;
+import com.example.cay.youshi.ui.activity.BaiDuMovieDetailActivity;
 import com.example.cay.youshi.ui.activity.MovieDetailActivity;
 import com.example.cay.youshi.bean.MovieDataBean;
 import com.example.cay.youshi.utils.CommonUtils;
@@ -22,7 +24,7 @@ import java.util.List;
  * Created by jingbin on 2016/11/25.
  */
 
-public class MovieDetailsAdapter extends BaseQuickAdapter<MovieDataBean,BaseViewHolder> {
+public class MovieDetailsAdapter extends BaseQuickAdapter<YouShiMovieDealisBean,BaseViewHolder> {
     private ImageView mImageView;
     private Context context;
     private ImageView mImageView1;
@@ -32,11 +34,11 @@ public class MovieDetailsAdapter extends BaseQuickAdapter<MovieDataBean,BaseView
     }
 
     @Override
-    protected void convert(final BaseViewHolder helper, final MovieDataBean item) {
+    protected void convert(final BaseViewHolder helper, final YouShiMovieDealisBean item) {
                 helper.setText(R.id.tv_one_title,item.getName())
                         .setText(R.id.tv_one_directors,item.getDirector())
                         .setText(R.id.tv_one_casts,item.getAct())
-                        .setText(R.id.tv_one_genres,context.getResources().getString(R.string.string_type)+item.getMovie_type())
+                        .setText(R.id.tv_one_genres,context.getResources().getString(R.string.string_type)+item.getGenres())
                         .setBackgroundColor(R.id.view_color, CommonUtils.randomColor())
                         .setText(R.id.tv_one_rating_rate,context.getResources().getString(R.string.string_rating)+item.getCode());
                         mImageView =helper.getView(R.id.iv_one_photo);
@@ -51,7 +53,7 @@ public class MovieDetailsAdapter extends BaseQuickAdapter<MovieDataBean,BaseView
             @Override
             protected void onNoDoubleClick(View v) {
                 mImageView1=helper.getView(R.id.iv_one_photo);
-            MovieDetailActivity.start((Activity)context, item.getId(),item.getImg_url(),mImageView1);
+            BaiDuMovieDetailActivity.start((Activity)context, item.getId(),item.getImg_url(),mImageView1);
 
             }
         });

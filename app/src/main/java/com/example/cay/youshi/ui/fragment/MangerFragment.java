@@ -19,6 +19,7 @@ import com.example.cay.youshi.adapter.MovieAdapter;
 import com.example.cay.youshi.base.adapter.BaseFragment;
 import com.example.cay.youshi.bean.MovieDataBean;
 import com.example.cay.youshi.bean.MovieTopbarBean;
+import com.example.cay.youshi.bean.YouShiMovieDealisBean;
 import com.example.cay.youshi.databinding.FragmentMovieBinding;
 import com.example.cay.youshi.databinding.HeaderMovieItemBinding;
 import com.example.cay.youshi.http.HttpUtils;
@@ -118,7 +119,7 @@ public class MangerFragment extends BaseFragment<FragmentMovieBinding> implement
                 });
     }
 
-    private void initAdapter(List<MovieDataBean> data) {
+    private void initAdapter(List<YouShiMovieDealisBean> data) {
         movieAdapter = new MovieAdapter(getContext(), R.layout.movie_grid_item, data);
         mRecyclerView.setAdapter(movieAdapter);
         movieAdapter.setOnLoadMoreListener(this);
@@ -133,17 +134,17 @@ public class MangerFragment extends BaseFragment<FragmentMovieBinding> implement
     }
 
     private void httpGetData(final boolean first, final boolean isRefresh) {
-        HttpUtils.getInstance().getMyObservableClient().singelRequirementFindData("movie_type","动画")
+       /* HttpUtils.getInstance().getMyObservableClient().singelRequirementFindData("movie_type","动画")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<List<MovieDataBean>>() {
+                .subscribe(new Observer<List<YouShiMovieDealisBean>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
 
                     }
 
                     @Override
-                    public void onNext(List<MovieDataBean> list) {
+                    public void onNext(List<YouShiMovieDealisBean> list) {
                         if (first) {
                             initAdapter(list);
                         } else {
@@ -176,7 +177,7 @@ public class MangerFragment extends BaseFragment<FragmentMovieBinding> implement
                     public void onComplete() {
 
                     }
-                });
+                });*/
 
     }
 

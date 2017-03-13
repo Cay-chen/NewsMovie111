@@ -230,7 +230,7 @@ public class MovieDetailActivity extends BaseHeaderActivity<HeaderSlideShapeBind
     }
 
     @Override
-    protected void setTitleClickMore() {
+    protected void setShareItem() {
         ShareUtils.share(this, "正在使用V视观看【" + name + "】 下载V视地址:https://fir.im/vision");
 
     }

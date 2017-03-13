@@ -6,7 +6,9 @@
         \n\n新闻数据和微信数据，使用的聚合提供的接口，该数据解释权都归聚合所有。
         \n\n视频内容都是在互联网上搜集而来，仅供测试和学习交流，若侵犯了您的权益，请及时联系我。
         </string>
-    <string name="actionbar_more">分享</string>
+    <string name="search_err">请输入收索内容</string>
+    <string name="actionbar_more">分享网盘链接</string>
+    <string name="actionbar_copy">复制网盘链接</string>
     <string name="movie_year">上映日期：</string>
     <string name="movie_city">制片国家/地区：</string>
     <string name="string_type">类型：</string>

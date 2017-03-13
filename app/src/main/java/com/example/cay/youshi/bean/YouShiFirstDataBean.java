@@ -11,6 +11,7 @@ public class YouShiFirstDataBean {
     private List<YouShiMovieDealisBean> movie;
     private List<YouShiMovieDealisBean> tv;
     private List<YouShiBannerDataBean> banners;
+    private String almm_url;
 
     public String getResCode() {
         return resCode;
@@ -44,6 +45,14 @@ public class YouShiFirstDataBean {
         this.banners = banners;
     }
 
+    public String getAlmm_url() {
+        return almm_url;
+    }
+
+    public void setAlmm_url(String almm_url) {
+        this.almm_url = almm_url;
+    }
+
     @Override
     public String toString() {
         return "YouShiFirstDataBean{" +
@@ -51,6 +60,7 @@ public class YouShiFirstDataBean {
                 ", movie=" + movie +
                 ", tv=" + tv +
                 ", banners=" + banners +
+                ", almm_url='" + almm_url + '\'' +
                 '}';
     }
 }

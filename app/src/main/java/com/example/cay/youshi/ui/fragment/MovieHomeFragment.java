@@ -64,11 +64,11 @@ public class MovieHomeFragment extends BaseFragment<FragmentMovieHomeBinding> {
         mTitleList.add("每日推荐");
         mTitleList.add("电影");
         mTitleList.add("电视剧");
-        mTitleList.add("动漫");
+       // mTitleList.add("动漫");
         mFragments.add(new EverydayFragment());
         mFragments.add(HomeChildFragment.newInstance("movie","2"));
         mFragments.add(HomeChildFragment.newInstance("tv","1"));
-        mFragments.add(new MangerFragment());
+      //  mFragments.add(new MangerFragment());
     }
 /**
      * 每日推荐点击"更多"跳转

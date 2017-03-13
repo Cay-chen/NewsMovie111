@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -15,6 +16,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.cay.youshi.R;
+import com.example.cay.youshi.bean.SingleLookupResultBean;
+import com.example.cay.youshi.bean.YouShiMovieDealisBean;
 import com.example.cay.youshi.ui.activity.MovieDetailActivity;
 import com.example.cay.youshi.adapter.MovieAdapter;
 import com.example.cay.youshi.base.adapter.BaseFragment;
@@ -29,6 +32,7 @@ import java.util.List;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 
 
@@ -43,7 +47,7 @@ public class HomeChildFragment extends BaseFragment<FragmentMovieBinding> implem
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private HeaderMovieItemBinding mHeaderBinding;
     private boolean isFirst = true;//是否第一次请求
-    private String position = "0";//请求位置记录
+    private String position = "1000000000";//请求位置记录
     private String FIRST_NUM = "15";//初始请求个数
     private String LAOD_NUM = "9";//上拉加载个数
     private MovieAdapter movieAdapter;
@@ -51,6 +55,7 @@ public class HomeChildFragment extends BaseFragment<FragmentMovieBinding> implem
     private String nameId;
     private String topbar;
     private String type;
+    private static final String TAG = "Cay";
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -137,72 +142,80 @@ public class HomeChildFragment extends BaseFragment<FragmentMovieBinding> implem
         });
     }
 
-    private void initAdapter(List<MovieDataBean> data) {
+    private void initAdapter(List<YouShiMovieDealisBean> data) {
         movieAdapter = new MovieAdapter(getContext(), R.layout.movie_grid_item, data);
         mRecyclerView.setAdapter(movieAdapter);
         movieAdapter.setOnLoadMoreListener(this);
         movieAdapter.addHeaderView(mHeaderBinding.getRoot());
-        position = String.valueOf(data.size());
+        position = data.get(data.size()-1).getMovie_count();
         movieAdapter.setEnableLoadMore(true);
         isFirst = false;
         showContentView();
         if (data.size() < 15) {
             movieAdapter.loadMoreEnd(true);
         }
-
     }
 
     private void httpGetData(final String position1, String num, final boolean first, final boolean isResfres) {
-        HttpUtils.getInstance().getMyObservableClient().oneRequirementFindData("type", type, position1, num).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<List<MovieDataBean>>() {
-            @Override
-            public void onSubscribe(Disposable d) {
+        Log.i(TAG, "httpGetData: "+position1);
+        HttpUtils.getInstance().getYouShiData(false).oneLookupResult(type, position1, num)
+                .map(new Function<SingleLookupResultBean, List<YouShiMovieDealisBean>>() {
+                    @Override
+                    public List<YouShiMovieDealisBean> apply(SingleLookupResultBean singleLookupResultBean) throws Exception {
+                        return singleLookupResultBean.getResult();
+                    }
+                }).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<List<YouShiMovieDealisBean>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
 
-            }
+                    }
 
-            @Override
-            public void onNext(List<MovieDataBean> list) {
-                if (first) {
-                    initAdapter(list);
-                } else {
-                    if (isResfres) {
-                        movieAdapter.setNewData(list);
-                        position = String.valueOf(list.size());
-                        if (list.size() < 15) {
-                            movieAdapter.loadMoreEnd(true);
-                        }
-                        mSwipeRefreshLayout.setRefreshing(false);
-                        movieAdapter.setEnableLoadMore(true);
-                        showContentView();
-                    } else {
-                        movieAdapter.addData(list);
-                        position = String.valueOf(movieAdapter.getData().size());
-                        movieAdapter.loadMoreComplete();
-                        if (list.size() < 9) {
-                            movieAdapter.loadMoreEnd(false);
+                    @Override
+                    public void onNext(List<YouShiMovieDealisBean> list) {
+                        Log.i(TAG, "onNext: "+list);
+                        if (first) {
+                            initAdapter(list);
+                        } else {
+                            if (isResfres) {
+                                movieAdapter.setNewData(list);
+                                position = list.get(list.size()-1).getMovie_count();
+                                if (list.size() < 15) {
+                                    movieAdapter.loadMoreEnd(true);
+                                }
+                                mSwipeRefreshLayout.setRefreshing(false);
+                                movieAdapter.setEnableLoadMore(true);
+                                showContentView();
+                            } else {
+                                movieAdapter.addData(list);
+                                position = movieAdapter.getData().get(movieAdapter.getData().size()-1).getMovie_count();
+                                movieAdapter.loadMoreComplete();
+                                if (list.size() < 9) {
+                                    movieAdapter.loadMoreEnd(false);
+                                }
+                            }
                         }
                     }
 
-                }
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                if (first) {
-                    showError();
-                } else {
-                    if (isResfres) {
-                        showError();
-                    } else {
-                        movieAdapter.loadMoreFail();
+                    @Override
+                    public void onError(Throwable e) {
+                        if (first) {
+                            showError();
+                        } else {
+                            if (isResfres) {
+                                showError();
+                            } else {
+                                movieAdapter.loadMoreFail();
+                            }
+                        }
                     }
-                }
-            }
 
-            @Override
-            public void onComplete() {
+                    @Override
+                    public void onComplete() {
 
-            }
-        });
+                    }
+                });
     }
 
     @Override

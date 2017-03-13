@@ -9,6 +9,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -16,10 +17,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.cay.youshi.R;
 import com.example.cay.youshi.adapter.MovieDetailsAdapter;
 import com.example.cay.youshi.bean.MovieDataBean;
+import com.example.cay.youshi.bean.SingleLookupResultBean;
+import com.example.cay.youshi.bean.YouShiMovieDealisBean;
 import com.example.cay.youshi.databinding.ActivitySearchMovieBinding;
 import com.example.cay.youshi.http.HttpUtils;
 
@@ -28,6 +32,7 @@ import java.util.List;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 
 public class SearchMovieActivity extends AppCompatActivity implements SearchView.OnQueryTextListener, View.OnTouchListener {
@@ -67,7 +72,12 @@ public class SearchMovieActivity extends AppCompatActivity implements SearchView
         errorView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                searchMovieDataHttp(mSearchView.getQuery().toString());
+                if (mSearchView.getQuery().toString().trim().isEmpty()) {
+                    Log.i(TAG, "请输入收索内容: ");
+                } else {
+                    searchMovieDataHttp(mSearchView.getQuery().toString());
+
+                }
 
             }
         });
@@ -109,13 +119,16 @@ public class SearchMovieActivity extends AppCompatActivity implements SearchView
                 return false;
             }
         });
-
         menu.findItem(R.id.menu_search).expandActionView();
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onQueryTextSubmit(String query) {
+        if (query.trim().isEmpty()) {
+            Toast.makeText(SearchMovieActivity.this, "请输入收索内容", Toast.LENGTH_LONG).show();
+
+        }
         searchMovieDataHttp(mSearchView.getQuery().toString());
         return false;
     }
@@ -146,17 +159,22 @@ public class SearchMovieActivity extends AppCompatActivity implements SearchView
         mRecyclerView.postDelayed(new Runnable() {
             @Override
             public void run() {
-                HttpUtils.getInstance().getMyObservableClient().singelRequirementFindData("name",name)
-                        .subscribeOn(Schedulers.io())
+                HttpUtils.getInstance().getYouShiData(false).singleLookupResult("name",name,"0","30")
+                        .map(new Function<SingleLookupResultBean, List<YouShiMovieDealisBean>>() {
+                            @Override
+                            public List<YouShiMovieDealisBean> apply(SingleLookupResultBean singleLookupResultBean) throws Exception {
+                                return singleLookupResultBean.getResult();
+                            }
+                        }).subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(new Observer<List<MovieDataBean>>() {
+                        .subscribe(new Observer<List<YouShiMovieDealisBean>>() {
                             @Override
                             public void onSubscribe(Disposable d) {
 
                             }
 
                             @Override
-                            public void onNext(List<MovieDataBean> list) {
+                            public void onNext(List<YouShiMovieDealisBean> list) {
                                 if (list.size() == 0) {
                                     mMovieDetailsAdapter.setEmptyView(notDataView);
                                 } else {
