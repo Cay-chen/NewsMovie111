@@ -60,6 +60,7 @@
             </intent-filter>
         </activity>
         <activity android:name="com.example.cay.youshi.ui.activity.SearchMovieActivity"
+            android:theme="@style/SearchThen"
             android:screenOrientation="portrait"/>
         <activity
             android:name="com.example.cay.youshi.MainActivity"
@@ -163,7 +164,9 @@
         <activity android:name="com.example.cay.youshi.ui.activity.PlayRecordCActivity"
             android:screenOrientation="portrait"/>
         <activity android:name="com.example.cay.youshi.ui.activity.BaiDuMovieDetailActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/BaiDu"
+            />
     </application>
 
 </manifest>

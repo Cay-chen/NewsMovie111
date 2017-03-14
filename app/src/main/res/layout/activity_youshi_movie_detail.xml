@@ -118,17 +118,52 @@
             </LinearLayout>
 
             <!--导演&演员-->
-            <Button
-                android:id="@+id/btn_youshi_movie_detail"
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:textColor="@color/colorPageBg"
-                android:textSize="15sp"
-                android:background="@drawable/button_shape"
-                style="?android:attr/borderlessButtonStyle" />
+                android:orientation="vertical">
 
-            <include layout="@layout/footer_item_movie_log"/>
+                <TextView
+                    android:id="@+id/tv_baidu_url"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/shape_notclickbg"
+                    android:padding="5dp"
+                    android:text="链接：http://pan.baidu.com/s/1dFf3zep 密码：uv81" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp">
+                    <Button
+                        android:id="@+id/btn_copy_url_password"
+                        style="?android:attr/borderlessButtonStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:layout_marginLeft="10dp"
+                        android:background="@drawable/button_shape"
+                        android:textColor="@color/colorPageBg"
+                        android:textSize="15sp" />
+                    <Button
+                        android:id="@+id/btn_copy_password"
+                        style="?android:attr/borderlessButtonStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:layout_marginLeft="20dp"
+                        android:background="@drawable/button_shape"
+                        android:visibility="gone"
+                        android:text="复制密码"
+                        android:textColor="@color/colorPageBg"
+                        android:textSize="15sp" />
+
+
+
+                </LinearLayout>
+            </LinearLayout>
+
+
+            <include layout="@layout/footer_item_movie_log" />
 
         </LinearLayout>
 
