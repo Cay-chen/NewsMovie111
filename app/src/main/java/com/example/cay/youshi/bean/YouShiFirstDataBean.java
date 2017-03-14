@@ -8,9 +8,9 @@ import java.util.List;
 
 public class YouShiFirstDataBean {
     private String resCode;
-    private List<YouShiMovieDealisBean> movie;
-    private List<YouShiMovieDealisBean> tv;
+    private List<List<YouShiMovieDealisBean>> result;
     private List<YouShiBannerDataBean> banners;
+    private YouShiBannerDataBean ads;
     private String almm_url;
 
     public String getResCode() {
@@ -21,20 +21,12 @@ public class YouShiFirstDataBean {
         this.resCode = resCode;
     }
 
-    public List<YouShiMovieDealisBean> getMovie() {
-        return movie;
+    public List<List<YouShiMovieDealisBean>> getResult() {
+        return result;
     }
 
-    public void setMovie(List<YouShiMovieDealisBean> movie) {
-        this.movie = movie;
-    }
-
-    public List<YouShiMovieDealisBean> getTv() {
-        return tv;
-    }
-
-    public void setTv(List<YouShiMovieDealisBean> tv) {
-        this.tv = tv;
+    public void setResult(List<List<YouShiMovieDealisBean>> result) {
+        this.result = result;
     }
 
     public List<YouShiBannerDataBean> getBanners() {
@@ -43,6 +35,14 @@ public class YouShiFirstDataBean {
 
     public void setBanners(List<YouShiBannerDataBean> banners) {
         this.banners = banners;
+    }
+
+    public YouShiBannerDataBean getAds() {
+        return ads;
+    }
+
+    public void setAds(YouShiBannerDataBean ads) {
+        this.ads = ads;
     }
 
     public String getAlmm_url() {
@@ -57,9 +57,9 @@ public class YouShiFirstDataBean {
     public String toString() {
         return "YouShiFirstDataBean{" +
                 "resCode='" + resCode + '\'' +
-                ", movie=" + movie +
-                ", tv=" + tv +
+                ", result=" + result +
                 ", banners=" + banners +
+                ", ads=" + ads +
                 ", almm_url='" + almm_url + '\'' +
                 '}';
     }

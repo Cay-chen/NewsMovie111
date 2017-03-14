@@ -172,12 +172,12 @@ public class WebViewActivity extends AppCompatActivity implements IWebPageView {
 
     @Override
     public void showVideoFullView() {
-        videoFullView.setVisibility(View.VISIBLE);
+     /*   videoFullView.setVisibility(View.VISIBLE);*/
     }
 
     @Override
     public void hindVideoFullView() {
-        videoFullView.setVisibility(View.GONE);
+     /*   videoFullView.setVisibility(View.GONE);*/
     }
 
     @Override
@@ -195,7 +195,7 @@ public class WebViewActivity extends AppCompatActivity implements IWebPageView {
 
     @Override
     public void addImageClickListener() {
-        // 这段js函数的功能就是，遍历所有的img节点，并添加onclick函数，函数的功能是在图片点击的时候调用本地java接口并传递url过去
+      /*  // 这段js函数的功能就是，遍历所有的img节点，并添加onclick函数，函数的功能是在图片点击的时候调用本地java接口并传递url过去
         // 如要点击一张图片在弹出的页面查看所有的图片集合,则获取的值应该是个图片数组
         webView.loadUrl("javascript:(function(){" +
                 "var objs = document.getElementsByTagName(\"img\");" +
@@ -214,7 +214,7 @@ public class WebViewActivity extends AppCompatActivity implements IWebPageView {
                 "objs[i].onclick=function(){" +
                 "window.injectedObject.textClick(this.getAttribute(\"type\"),this.getAttribute(\"item_pk\"));}" +
                 "}" +
-                "})()");
+                "})()");*/
     }
 
     /**

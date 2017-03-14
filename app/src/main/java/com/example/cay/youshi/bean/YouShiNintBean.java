@@ -53,32 +53,6 @@ public class YouShiNintBean {
     private String total_num_6;
     private String year_6;
 
-    private String code_7;
-    private String id_7;
-    private String img_url_7;
-    private String name_7;
-    private String now_num_7;
-    private String total_num_7;
-    private String year_7;
-
-    private String code_8;
-    private String id_8;
-    private String img_url_8;
-    private String name_8;
-    private String now_num_8;
-    private String total_num_8;
-    private String year_8;
-
-    private String code_9;
-    private String id_9;
-    private String img_url_9;
-    private String name_9;
-    private String now_num_9;
-    private String total_num_9;
-    private String year_9;
-
-
-
     public String getCode_1() {
         return code_1;
     }
@@ -415,173 +389,51 @@ public class YouShiNintBean {
         this.year_6 = year_6;
     }
 
-    public String getCode_7() {
-        return code_7;
+    @Override
+    public String toString() {
+        return "YouShiNintBean{" +
+                "code_1='" + code_1 + '\'' +
+                ", id_1='" + id_1 + '\'' +
+                ", img_url_1='" + img_url_1 + '\'' +
+                ", name_1='" + name_1 + '\'' +
+                ", now_num_1='" + now_num_1 + '\'' +
+                ", total_num_1='" + total_num_1 + '\'' +
+                ", year_1='" + year_1 + '\'' +
+                ", code_2='" + code_2 + '\'' +
+                ", id_2='" + id_2 + '\'' +
+                ", img_url_2='" + img_url_2 + '\'' +
+                ", name_2='" + name_2 + '\'' +
+                ", now_num_2='" + now_num_2 + '\'' +
+                ", total_num_2='" + total_num_2 + '\'' +
+                ", year_2='" + year_2 + '\'' +
+                ", code_3='" + code_3 + '\'' +
+                ", id_3='" + id_3 + '\'' +
+                ", img_url_3='" + img_url_3 + '\'' +
+                ", name_3='" + name_3 + '\'' +
+                ", now_num_3='" + now_num_3 + '\'' +
+                ", total_num_3='" + total_num_3 + '\'' +
+                ", year_3='" + year_3 + '\'' +
+                ", code_4='" + code_4 + '\'' +
+                ", id_4='" + id_4 + '\'' +
+                ", img_url_4='" + img_url_4 + '\'' +
+                ", name_4='" + name_4 + '\'' +
+                ", now_num_4='" + now_num_4 + '\'' +
+                ", total_num_4='" + total_num_4 + '\'' +
+                ", year_4='" + year_4 + '\'' +
+                ", code_5='" + code_5 + '\'' +
+                ", id_5='" + id_5 + '\'' +
+                ", img_url_5='" + img_url_5 + '\'' +
+                ", name_5='" + name_5 + '\'' +
+                ", now_num_5='" + now_num_5 + '\'' +
+                ", total_num_5='" + total_num_5 + '\'' +
+                ", year_5='" + year_5 + '\'' +
+                ", code_6='" + code_6 + '\'' +
+                ", id_6='" + id_6 + '\'' +
+                ", img_url_6='" + img_url_6 + '\'' +
+                ", name_6='" + name_6 + '\'' +
+                ", now_num_6='" + now_num_6 + '\'' +
+                ", total_num_6='" + total_num_6 + '\'' +
+                ", year_6='" + year_6 + '\'' +
+                '}';
     }
-
-    public void setCode_7(String code_7) {
-        this.code_7 = code_7;
-    }
-
-    public String getId_7() {
-        return id_7;
-    }
-
-    public void setId_7(String id_7) {
-        this.id_7 = id_7;
-    }
-
-    public String getImg_url_7() {
-        return img_url_7;
-    }
-
-    public void setImg_url_7(String img_url_7) {
-        this.img_url_7 = img_url_7;
-    }
-
-    public String getName_7() {
-        return name_7;
-    }
-
-    public void setName_7(String name_7) {
-        this.name_7 = name_7;
-    }
-
-    public String getNow_num_7() {
-        return now_num_7;
-    }
-
-    public void setNow_num_7(String now_num_7) {
-        this.now_num_7 = now_num_7;
-    }
-
-    public String getTotal_num_7() {
-        return total_num_7;
-    }
-
-    public void setTotal_num_7(String total_num_7) {
-        this.total_num_7 = total_num_7;
-    }
-
-    public String getYear_7() {
-        return year_7;
-    }
-
-    public void setYear_7(String year_7) {
-        this.year_7 = year_7;
-    }
-
-    public String getCode_8() {
-        return code_8;
-    }
-
-    public void setCode_8(String code_8) {
-        this.code_8 = code_8;
-    }
-
-    public String getId_8() {
-        return id_8;
-    }
-
-    public void setId_8(String id_8) {
-        this.id_8 = id_8;
-    }
-
-    public String getImg_url_8() {
-        return img_url_8;
-    }
-
-    public void setImg_url_8(String img_url_8) {
-        this.img_url_8 = img_url_8;
-    }
-
-    public String getName_8() {
-        return name_8;
-    }
-
-    public void setName_8(String name_8) {
-        this.name_8 = name_8;
-    }
-
-    public String getNow_num_8() {
-        return now_num_8;
-    }
-
-    public void setNow_num_8(String now_num_8) {
-        this.now_num_8 = now_num_8;
-    }
-
-    public String getTotal_num_8() {
-        return total_num_8;
-    }
-
-    public void setTotal_num_8(String total_num_8) {
-        this.total_num_8 = total_num_8;
-    }
-
-    public String getYear_8() {
-        return year_8;
-    }
-
-    public void setYear_8(String year_8) {
-        this.year_8 = year_8;
-    }
-
-    public String getCode_9() {
-        return code_9;
-    }
-
-    public void setCode_9(String code_9) {
-        this.code_9 = code_9;
-    }
-
-    public String getId_9() {
-        return id_9;
-    }
-
-    public void setId_9(String id_9) {
-        this.id_9 = id_9;
-    }
-
-    public String getImg_url_9() {
-        return img_url_9;
-    }
-
-    public void setImg_url_9(String img_url_9) {
-        this.img_url_9 = img_url_9;
-    }
-
-    public String getName_9() {
-        return name_9;
-    }
-
-    public void setName_9(String name_9) {
-        this.name_9 = name_9;
-    }
-
-    public String getNow_num_9() {
-        return now_num_9;
-    }
-
-    public void setNow_num_9(String now_num_9) {
-        this.now_num_9 = now_num_9;
-    }
-
-    public String getTotal_num_9() {
-        return total_num_9;
-    }
-
-    public void setTotal_num_9(String total_num_9) {
-        this.total_num_9 = total_num_9;
-    }
-
-    public String getYear_9() {
-        return year_9;
-    }
-
-    public void setYear_9(String year_9) {
-        this.year_9 = year_9;
-    }
-
-
 }

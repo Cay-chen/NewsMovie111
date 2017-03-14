@@ -3,6 +3,7 @@ package com.example.cay.youshi.webview.config;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
+import android.util.Log;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
@@ -27,6 +28,12 @@ public class MyWebViewClient extends WebViewClient {
         this.mIWebPageView = mIWebPageView;
         mActivity = (WebViewActivity) mIWebPageView;
 
+    }
+
+    @Override
+    public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
+        Log.i("Cay", "onReceivedError: "+errorCode);
+        super.onReceivedError(view, errorCode, description, failingUrl);
     }
 
     @SuppressWarnings("deprecation")

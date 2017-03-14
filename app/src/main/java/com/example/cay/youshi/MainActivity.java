@@ -1,6 +1,7 @@
 package com.example.cay.youshi;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.databinding.DataBindingUtil;
 import android.net.Uri;
 import android.os.Bundle;
@@ -43,6 +44,7 @@ import com.example.cay.youshi.ui.menu.NavDownloadActivity;
 import com.example.cay.youshi.ui.menu.NavHomePageActivity;
 import com.example.cay.youshi.utils.CommonUtils;
 import com.example.cay.youshi.utils.ImgLoadUtil;
+import com.example.cay.youshi.webview.WebViewActivity;
 
 import org.litepal.tablemanager.Connector;
 
@@ -94,8 +96,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         llTitleMenu = mBinding.include.llTitleMenu;
         drawerLayout = mBinding.drawerLayout;
         toolbar = mBinding.include.toolbar;
-        llTitleGank = mBinding.include.ivTitleGank;
-        llTitleOne = mBinding.include.ivTitleOne;
+       //// llTitleGank = mBinding.include.ivTitleGank;
+       // llTitleOne = mBinding.include.ivTitleOne;
         vpContent = mBinding.include.vpContent;
         mFl = mBinding.include.fab;
         mFl.setImageResource(R.mipmap.fuli);
@@ -103,8 +105,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void initListener() {
         llTitleMenu.setOnClickListener(this);
-        llTitleGank.setOnClickListener(this);
-        llTitleOne.setOnClickListener(this);
+//        llTitleGank.setOnClickListener(this);
+     //   llTitleOne.setOnClickListener(this);
         mFl.setOnClickListener(this);
     }
 
@@ -129,14 +131,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void initContentFragment() {
         ArrayList<Fragment> mFragmentList = new ArrayList<>();
         mFragmentList.add(new MovieHomeFragment());
-        mFragmentList.add(new MeFragment());
+        //mFragmentList.add(new MeFragment());
         // 注意使用的是：getSupportFragmentManager
         MyFragmentPagerAdapter adapter = new MyFragmentPagerAdapter(getSupportFragmentManager(), mFragmentList);
         vpContent.setAdapter(adapter);
         // 设置ViewPager最大缓存的页面个数(cpu消耗少)
         vpContent.setOffscreenPageLimit(1);
         vpContent.addOnPageChangeListener(this);
-        mBinding.include.ivTitleGank.setSelected(true);
+     //   mBinding.include.ivTitleGank.setSelected(true);
         vpContent.setCurrentItem(0);
 
         setSupportActionBar(toolbar);
@@ -155,7 +157,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 // 关闭
 //                drawerLayout.closeDrawer(GravityCompat.START);
                 break;
-            case R.id.iv_title_gank:// 电影栏
+        /*    case R.id.iv_title_gank:// 电影栏
                 if (vpContent.getCurrentItem() != 0) {//不然cpu会有损耗
                     vpContent.setCurrentItem(0);
                 }
@@ -164,16 +166,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (vpContent.getCurrentItem() != 1) {
                     vpContent.setCurrentItem(1);
                 }
-                break;
+                break;*/
 
             case R.id.ll_nav_homepage:// 主页
-                mBinding.drawerLayout.closeDrawer(GravityCompat.START);
+                SharedPreferences sp = getSharedPreferences("LOCAL_IP", 0);
+                String  ip = sp.getString("ip", null);
+                if (ip ==null) {
+                    return;
+                }
+                WebViewActivity.loadUrl(MainActivity.this,"http://"+ip.trim()+":8889/Helper/index.html","介绍与帮助");
+
+               /* mBinding.drawerLayout.closeDrawer(GravityCompat.START);
                 mBinding.drawerLayout.postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         NavHomePageActivity.startHome(MainActivity.this);
                     }
-                }, 360);
+                }, 360);*/
 
                 break;
 
@@ -217,7 +226,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onPageSelected(int position) {
         switch (position) {
-            case 0:
+          /*  case 0:
                 llTitleOne.setBackgroundResource(R.drawable.baidu_top_right_false);
                 llTitleOne.setTextColor(getResources().getColor(R.color.white));
                 llTitleGank.setBackgroundResource(R.drawable.baidu_top_left_true);
@@ -228,7 +237,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 llTitleOne.setTextColor(getResources().getColor(R.color.colorTheme));
                 llTitleGank.setBackgroundResource(R.drawable.baidu_top_left_fals);
                 llTitleGank.setTextColor(getResources().getColor(R.color.white));
-                break;
+                break;*/
 
         }
     }

@@ -156,7 +156,7 @@ public class SearchMovieActivity extends AppCompatActivity implements SearchView
         mRecyclerView.postDelayed(new Runnable() {
             @Override
             public void run() {
-                HttpUtils.getInstance().getYouShiData(false).singleLookupResult("name", name, "0", "30")
+                HttpUtils.getInstance().getYouShiData(false).singleLookupResult("name", name, "10000000000", "30")
                         .map(new Function<SingleLookupResultBean, List<YouShiMovieDealisBean>>() {
                             @Override
                             public List<YouShiMovieDealisBean> apply(SingleLookupResultBean singleLookupResultBean) throws Exception {

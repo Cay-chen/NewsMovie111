@@ -169,7 +169,9 @@ public class HomeChildFragment extends BaseFragment<FragmentMovieBinding> implem
         mRecyclerView.setAdapter(movieAdapter);
         movieAdapter.setOnLoadMoreListener(this);
         movieAdapter.addHeaderView(mHeaderBinding.getRoot());
-        position = data.get(data.size()-1).getMovie_count();
+        if (data.size() > 0) {
+            position = data.get(data.size()-1).getMovie_count();
+        }
         movieAdapter.setEnableLoadMore(true);
         isFirst = false;
         showContentView();

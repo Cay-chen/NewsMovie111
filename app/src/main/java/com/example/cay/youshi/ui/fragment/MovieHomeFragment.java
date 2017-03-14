@@ -64,11 +64,11 @@ public class MovieHomeFragment extends BaseFragment<FragmentMovieHomeBinding> {
         mTitleList.add("每日推荐");
         mTitleList.add("电影");
         mTitleList.add("电视剧");
-       // mTitleList.add("动漫");
+       mTitleList.add("动漫");
         mFragments.add(new EverydayFragment());
         mFragments.add(HomeChildFragment.newInstance("movie","2"));
         mFragments.add(HomeChildFragment.newInstance("tv","1"));
-      //  mFragments.add(new MangerFragment());
+       mFragments.add(new MangerFragment());
     }
 /**
      * 每日推荐点击"更多"跳转
@@ -79,12 +79,12 @@ public class MovieHomeFragment extends BaseFragment<FragmentMovieHomeBinding> {
                 .subscribe(new Consumer() {
                     @Override
                     public void accept(Object o) throws Exception {
-                        if ((Integer)o == 0) {
-                            bindingView.vpGank.setCurrentItem(3);
-                        } else if ((Integer)o == 1) {
+                        if ((Integer)o == 1) {
                             bindingView.vpGank.setCurrentItem(1);
                         } else if ((Integer)o == 2) {
                             bindingView.vpGank.setCurrentItem(2);
+                        } else if ((Integer)o == 3) {
+                            bindingView.vpGank.setCurrentItem(3);
                         }
                     }
                 }

@@ -19,6 +19,7 @@ import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.example.cay.youshi.R;
@@ -26,6 +27,7 @@ import com.example.cay.youshi.adapter.YouShiNineAdapter;
 import com.example.cay.youshi.base.GlideImageLoader;
 import com.example.cay.youshi.base.adapter.BaseFragment;
 import com.example.cay.youshi.bean.YouShiFirstDataBean;
+import com.example.cay.youshi.bean.YouShiMovieDealisBean;
 import com.example.cay.youshi.bean.YouShiNintBean;
 import com.example.cay.youshi.databinding.FooterItemEverydayBinding;
 import com.example.cay.youshi.databinding.FragmentEverydayBinding;
@@ -67,6 +69,7 @@ public class EverydayFragment extends BaseFragment<FragmentEverydayBinding> {
     private View mHeaderView;
     private View mFooterView;
     private SharedPreferences sp;
+    private FooterItemEverydayBinding mFooterBinding;
     private RotateAnimation animation;
     private YouShiNineAdapter mYouShiNineAdapter;
     private boolean isZiDongGet = false;
@@ -116,7 +119,7 @@ public class EverydayFragment extends BaseFragment<FragmentEverydayBinding> {
         bindingView.ivLoading.setAnimation(animation);
         animation.startNow();
         mHeaderBinding = DataBindingUtil.inflate(LayoutInflater.from(getContext()), R.layout.header_item_everyday, null, false);
-        FooterItemEverydayBinding mFooterBinding = DataBindingUtil.inflate(LayoutInflater.from(getContext()), R.layout.footer_item_everyday, null, false);
+        mFooterBinding = DataBindingUtil.inflate(LayoutInflater.from(getContext()), R.layout.footer_item_everyday, null, false);
         mHeaderView = mHeaderBinding.getRoot();
         View view = mHeaderView.findViewById(R.id.include_everyday);
         FrameLayout ibt_movie = (FrameLayout) view.findViewById(R.id.fl_everyday);
@@ -159,7 +162,6 @@ public class EverydayFragment extends BaseFragment<FragmentEverydayBinding> {
     protected void loadData() {
 
 
-
     }
 
     private void initRecyulerView() {
@@ -190,7 +192,7 @@ public class EverydayFragment extends BaseFragment<FragmentEverydayBinding> {
 
                     @Override
                     public void onNext(String value) {
-                        Log.i(TAG, "获取远程Ip成功: "+value);
+                        Log.i(TAG, "获取远程Ip成功: " + value);
                         sp.edit().putString("ip", value).commit();
                         isGetNetwork = true;
                         initFirstData(true);
@@ -200,7 +202,7 @@ public class EverydayFragment extends BaseFragment<FragmentEverydayBinding> {
                     public void onError(Throwable e) {
                         Log.i(TAG, "获取远程Ip失败 ");
 
-                        isGetNetwork =false;
+                        isGetNetwork = false;
                         showError();
                     }
 
@@ -217,7 +219,7 @@ public class EverydayFragment extends BaseFragment<FragmentEverydayBinding> {
      * @return ss
      */
     public String getSpIp() {
-        sp =getActivity().getSharedPreferences("LOCAL_IP", 0);
+        sp = getActivity().getSharedPreferences("LOCAL_IP", 0);
         String result = sp.getString("ip", null);
         return result;
     }
@@ -231,9 +233,12 @@ public class EverydayFragment extends BaseFragment<FragmentEverydayBinding> {
                     }
 
                     @Override
-                    public void onNext(YouShiFirstDataBean value) {
+                    public void onNext(final YouShiFirstDataBean value) {
                         Log.i(TAG, "请求数据成功: ");
                         RxBus.getDefault().send(RxCodeConstants.JUMP_TYPE_TO_ONE, value.getAlmm_url());
+
+
+
                         /**************获取banner数据****************************/
                         String[] bannerTitle = new String[value.getBanners().size()];
                         String[] bannerImg = new String[value.getBanners().size()];
@@ -246,187 +251,92 @@ public class EverydayFragment extends BaseFragment<FragmentEverydayBinding> {
                             bannerType[i] = value.getBanners().get(i).getType();
                         }
                         initBanner(bannerImg, bannerTitle, bannerId, bannerType);
+
                         /**************获取rv数据****************************/
                         List<YouShiNintBean> mList = new ArrayList<>();
-                        YouShiNintBean nintBean = new YouShiNintBean();
-                        for (int i = 0; i < value.getMovie().size(); i++) {
-                            switch (i) {
-                                case 0:
-                                    nintBean.setCode_1(value.getMovie().get(i).getCode());
-                                    nintBean.setId_1(value.getMovie().get(i).getId());
-                                    nintBean.setImg_url_1(value.getMovie().get(i).getImg_url());
-                                    nintBean.setNow_num_1(value.getMovie().get(i).getNow_num());
-                                    nintBean.setTotal_num_1(value.getMovie().get(i).getTotal_num());
-                                    nintBean.setName_1(value.getMovie().get(i).getName());
-                                    nintBean.setYear_1(value.getMovie().get(i).getYear());
-                                    break;
-                                case 1:
-                                    nintBean.setCode_2(value.getMovie().get(i).getCode());
-                                    nintBean.setId_2(value.getMovie().get(i).getId());
-                                    nintBean.setImg_url_2(value.getMovie().get(i).getImg_url());
-                                    nintBean.setNow_num_2(value.getMovie().get(i).getNow_num());
-                                    nintBean.setTotal_num_2(value.getMovie().get(i).getTotal_num());
-                                    nintBean.setName_2(value.getMovie().get(i).getName());
-                                    nintBean.setYear_2(value.getMovie().get(i).getYear());
-                                    break;
-                                case 2:
-                                    nintBean.setCode_3(value.getMovie().get(i).getCode());
-                                    nintBean.setId_3(value.getMovie().get(i).getId());
-                                    nintBean.setImg_url_3(value.getMovie().get(i).getImg_url());
-                                    nintBean.setNow_num_3(value.getMovie().get(i).getNow_num());
-                                    nintBean.setTotal_num_3(value.getMovie().get(i).getTotal_num());
-                                    nintBean.setName_3(value.getMovie().get(i).getName());
-                                    nintBean.setYear_3(value.getMovie().get(i).getYear());
-                                    break;
-                                case 3:
-                                    nintBean.setCode_4(value.getMovie().get(i).getCode());
-                                    nintBean.setId_4(value.getMovie().get(i).getId());
-                                    nintBean.setImg_url_4(value.getMovie().get(i).getImg_url());
-                                    nintBean.setNow_num_4(value.getMovie().get(i).getNow_num());
-                                    nintBean.setTotal_num_4(value.getMovie().get(i).getTotal_num());
-                                    nintBean.setName_4(value.getMovie().get(i).getName());
-                                    nintBean.setYear_4(value.getMovie().get(i).getYear());
-                                    break;
-                                case 4:
-                                    nintBean.setCode_5(value.getMovie().get(i).getCode());
-                                    nintBean.setId_5(value.getMovie().get(i).getId());
-                                    nintBean.setImg_url_5(value.getMovie().get(i).getImg_url());
-                                    nintBean.setNow_num_5(value.getMovie().get(i).getNow_num());
-                                    nintBean.setTotal_num_5(value.getMovie().get(i).getTotal_num());
-                                    nintBean.setName_5(value.getMovie().get(i).getName());
-                                    nintBean.setYear_5(value.getMovie().get(i).getYear());
-                                    break;
-                                case 5:
-                                    nintBean.setCode_6(value.getMovie().get(i).getCode());
-                                    nintBean.setId_6(value.getMovie().get(i).getId());
-                                    nintBean.setImg_url_6(value.getMovie().get(i).getImg_url());
-                                    nintBean.setNow_num_6(value.getMovie().get(i).getNow_num());
-                                    nintBean.setTotal_num_6(value.getMovie().get(i).getTotal_num());
-                                    nintBean.setName_6(value.getMovie().get(i).getName());
-                                    nintBean.setYear_6(value.getMovie().get(i).getYear());
-                                    break;
-                                case 6:
-                                    nintBean.setCode_7(value.getMovie().get(i).getCode());
-                                    nintBean.setId_7(value.getMovie().get(i).getId());
-                                    nintBean.setImg_url_7(value.getMovie().get(i).getImg_url());
-                                    nintBean.setNow_num_7(value.getMovie().get(i).getNow_num());
-                                    nintBean.setTotal_num_7(value.getMovie().get(i).getTotal_num());
-                                    nintBean.setName_7(value.getMovie().get(i).getName());
-                                    nintBean.setYear_7(value.getMovie().get(i).getYear());
-                                    break;
-                                case 7:
-                                    nintBean.setCode_8(value.getMovie().get(i).getCode());
-                                    nintBean.setId_8(value.getMovie().get(i).getId());
-                                    nintBean.setImg_url_8(value.getMovie().get(i).getImg_url());
-                                    nintBean.setNow_num_8(value.getMovie().get(i).getNow_num());
-                                    nintBean.setTotal_num_8(value.getMovie().get(i).getTotal_num());
-                                    nintBean.setName_8(value.getMovie().get(i).getName());
-                                    nintBean.setYear_8(value.getMovie().get(i).getYear());
-                                    break;
-                                case 8:
-                                    nintBean.setCode_9(value.getMovie().get(i).getCode());
-                                    nintBean.setId_9(value.getMovie().get(i).getId());
-                                    nintBean.setImg_url_9(value.getMovie().get(i).getImg_url());
-                                    nintBean.setNow_num_9(value.getMovie().get(i).getNow_num());
-                                    nintBean.setTotal_num_9(value.getMovie().get(i).getTotal_num());
-                                    nintBean.setName_9(value.getMovie().get(i).getName());
-                                    nintBean.setYear_9(value.getMovie().get(i).getYear());
-                                    break;
-
+                        for (int i = 0; i < value.getResult().size(); i++) {
+                            YouShiNintBean nintBean = new YouShiNintBean();
+                            List<YouShiMovieDealisBean> listItem = value.getResult().get(i);
+                            for (int n = 0; n < listItem.size(); n++) {
+                                switch (n) {
+                                    case 0:
+                                        nintBean.setCode_1(listItem.get(n).getCode());
+                                        nintBean.setId_1(listItem.get(n).getId());
+                                        nintBean.setImg_url_1(listItem.get(n).getImg_url());
+                                        nintBean.setNow_num_1(listItem.get(n).getNow_num());
+                                        nintBean.setTotal_num_1(listItem.get(n).getTotal_num());
+                                        nintBean.setName_1(listItem.get(n).getName());
+                                        nintBean.setYear_1(listItem.get(n).getYear());
+                                        break;
+                                    case 1:
+                                        nintBean.setCode_2(listItem.get(n).getCode());
+                                        nintBean.setId_2(listItem.get(n).getId());
+                                        nintBean.setImg_url_2(listItem.get(n).getImg_url());
+                                        nintBean.setNow_num_2(listItem.get(n).getNow_num());
+                                        nintBean.setTotal_num_2(listItem.get(n).getTotal_num());
+                                        nintBean.setName_2(listItem.get(n).getName());
+                                        nintBean.setYear_2(listItem.get(n).getYear());
+                                        break;
+                                    case 2:
+                                        nintBean.setCode_3(listItem.get(n).getCode());
+                                        nintBean.setId_3(listItem.get(n).getId());
+                                        nintBean.setImg_url_3(listItem.get(n).getImg_url());
+                                        nintBean.setNow_num_3(listItem.get(n).getNow_num());
+                                        nintBean.setTotal_num_3(listItem.get(n).getTotal_num());
+                                        nintBean.setName_3(listItem.get(n).getName());
+                                        nintBean.setYear_3(listItem.get(n).getYear());
+                                        break;
+                                    case 3:
+                                        nintBean.setCode_4(listItem.get(n).getCode());
+                                        nintBean.setId_4(listItem.get(n).getId());
+                                        nintBean.setImg_url_4(listItem.get(n).getImg_url());
+                                        nintBean.setNow_num_4(listItem.get(n).getNow_num());
+                                        nintBean.setTotal_num_4(listItem.get(n).getTotal_num());
+                                        nintBean.setName_4(listItem.get(n).getName());
+                                        nintBean.setYear_4(listItem.get(n).getYear());
+                                        break;
+                                    case 4:
+                                        nintBean.setCode_5(listItem.get(n).getCode());
+                                        nintBean.setId_5(listItem.get(n).getId());
+                                        nintBean.setImg_url_5(listItem.get(n).getImg_url());
+                                        nintBean.setNow_num_5(listItem.get(n).getNow_num());
+                                        nintBean.setTotal_num_5(listItem.get(n).getTotal_num());
+                                        nintBean.setName_5(listItem.get(n).getName());
+                                        nintBean.setYear_5(listItem.get(n).getYear());
+                                        break;
+                                    case 5:
+                                        nintBean.setCode_6(listItem.get(n).getCode());
+                                        nintBean.setId_6(listItem.get(n).getId());
+                                        nintBean.setImg_url_6(listItem.get(n).getImg_url());
+                                        nintBean.setNow_num_6(listItem.get(n).getNow_num());
+                                        nintBean.setTotal_num_6(listItem.get(n).getTotal_num());
+                                        nintBean.setName_6(listItem.get(n).getName());
+                                        nintBean.setYear_6(listItem.get(n).getYear());
+                                        break;
+                                }
                             }
+                            mList.add(nintBean);
                         }
-                        mList.add(nintBean);
-                        YouShiNintBean nintBean1 = new YouShiNintBean();
-                        for (int i = 0; i < value.getTv().size(); i++) {
-                            switch (i) {
-                                case 0:
-                                    nintBean1.setCode_1(value.getTv().get(i).getCode());
-                                    nintBean1.setId_1(value.getTv().get(i).getId());
-                                    nintBean1.setImg_url_1(value.getTv().get(i).getImg_url());
-                                    nintBean1.setNow_num_1(value.getTv().get(i).getNow_num());
-                                    nintBean1.setTotal_num_1(value.getTv().get(i).getTotal_num());
-                                    nintBean1.setName_1(value.getTv().get(i).getName());
-                                    nintBean1.setYear_1(value.getTv().get(i).getYear());
-                                    break;
-                                case 1:
-                                    nintBean1.setCode_2(value.getTv().get(i).getCode());
-                                    nintBean1.setId_2(value.getTv().get(i).getId());
-                                    nintBean1.setImg_url_2(value.getTv().get(i).getImg_url());
-                                    nintBean1.setNow_num_2(value.getTv().get(i).getNow_num());
-                                    nintBean1.setTotal_num_2(value.getTv().get(i).getTotal_num());
-                                    nintBean1.setName_2(value.getTv().get(i).getName());
-                                    nintBean1.setYear_2(value.getTv().get(i).getYear());
-                                    break;
-                                case 2:
-                                    nintBean1.setCode_3(value.getTv().get(i).getCode());
-                                    nintBean1.setId_3(value.getTv().get(i).getId());
-                                    nintBean1.setImg_url_3(value.getTv().get(i).getImg_url());
-                                    nintBean1.setNow_num_3(value.getTv().get(i).getNow_num());
-                                    nintBean1.setTotal_num_3(value.getTv().get(i).getTotal_num());
-                                    nintBean1.setName_3(value.getTv().get(i).getName());
-                                    nintBean1.setYear_3(value.getTv().get(i).getYear());
-                                    break;
-                                case 3:
-                                    nintBean1.setCode_4(value.getTv().get(i).getCode());
-                                    nintBean1.setId_4(value.getTv().get(i).getId());
-                                    nintBean1.setImg_url_4(value.getTv().get(i).getImg_url());
-                                    nintBean1.setNow_num_4(value.getTv().get(i).getNow_num());
-                                    nintBean1.setTotal_num_4(value.getTv().get(i).getTotal_num());
-                                    nintBean1.setName_4(value.getTv().get(i).getName());
-                                    nintBean1.setYear_4(value.getTv().get(i).getYear());
-                                    break;
-                                case 4:
-                                    nintBean1.setCode_5(value.getTv().get(i).getCode());
-                                    nintBean1.setId_5(value.getTv().get(i).getId());
-                                    nintBean1.setImg_url_5(value.getTv().get(i).getImg_url());
-                                    nintBean1.setNow_num_5(value.getTv().get(i).getNow_num());
-                                    nintBean1.setTotal_num_5(value.getTv().get(i).getTotal_num());
-                                    nintBean1.setName_5(value.getTv().get(i).getName());
-                                    nintBean1.setYear_5(value.getTv().get(i).getYear());
-                                    break;
-                                case 5:
-                                    nintBean1.setCode_6(value.getTv().get(i).getCode());
-                                    nintBean1.setId_6(value.getTv().get(i).getId());
-                                    nintBean1.setImg_url_6(value.getTv().get(i).getImg_url());
-                                    nintBean1.setNow_num_6(value.getTv().get(i).getNow_num());
-                                    nintBean1.setTotal_num_6(value.getTv().get(i).getTotal_num());
-                                    nintBean1.setName_6(value.getTv().get(i).getName());
-                                    nintBean1.setYear_6(value.getTv().get(i).getYear());
-                                    break;
-                                case 6:
-                                    nintBean1.setCode_7(value.getTv().get(i).getCode());
-                                    nintBean1.setId_7(value.getTv().get(i).getId());
-                                    nintBean1.setImg_url_7(value.getTv().get(i).getImg_url());
-                                    nintBean1.setNow_num_7(value.getTv().get(i).getNow_num());
-                                    nintBean1.setTotal_num_7(value.getTv().get(i).getTotal_num());
-                                    nintBean1.setName_7(value.getTv().get(i).getName());
-                                    nintBean1.setYear_7(value.getTv().get(i).getYear());
-                                    break;
-                                case 7:
-                                    nintBean1.setCode_8(value.getTv().get(i).getCode());
-                                    nintBean1.setId_8(value.getTv().get(i).getId());
-                                    nintBean1.setImg_url_8(value.getTv().get(i).getImg_url());
-                                    nintBean1.setNow_num_8(value.getTv().get(i).getNow_num());
-                                    nintBean1.setTotal_num_8(value.getTv().get(i).getTotal_num());
-                                    nintBean1.setName_8(value.getTv().get(i).getName());
-                                    nintBean1.setYear_8(value.getTv().get(i).getYear());
-                                    break;
-                                case 8:
-                                    nintBean1.setCode_9(value.getTv().get(i).getCode());
-                                    nintBean1.setId_9(value.getTv().get(i).getId());
-                                    nintBean1.setImg_url_9(value.getTv().get(i).getImg_url());
-                                    nintBean1.setNow_num_9(value.getTv().get(i).getNow_num());
-                                    nintBean1.setTotal_num_9(value.getTv().get(i).getTotal_num());
-                                    nintBean1.setName_9(value.getTv().get(i).getName());
-                                    nintBean1.setYear_9(value.getTv().get(i).getYear());
-                                    break;
-                            }
-                        }
-                        mList.add(nintBean1);
                         mYouShiNineAdapter = new YouShiNineAdapter(getContext(), R.layout.item_everyday_nith, mList);
                         mYouShiNineAdapter.addHeaderView(mHeaderView);
                         mYouShiNineAdapter.addFooterView(mFooterView);
                         mRecyclerView.setAdapter(mYouShiNineAdapter);
+                        ImageView imageView = mFooterBinding.ivFoodPhoto;
+                        Glide.with(getContext()).load(value.getAds().getImg_url()).into(imageView);
+                        imageView.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                if (value.getAds().getType().equals("1")) {
+                                    BaiDuMovieDetailActivity.start((Activity) getContext(), value.getAds().getMovie_id(), value.getAds().getImg_url(), null);
+                                } else {
+                                    Intent intent = new Intent(Intent.ACTION_VIEW);
+                                    intent.setData(Uri.parse(value.getAds().getImg_url()));
+                                    getContext().startActivity(intent);
+                                }
+                            }
+                        });
+
+                        mFooterBinding.tvFoodPhotoTitle.setText(value.getAds().getName());
                         showRotaLoading(false);
 
                     }
