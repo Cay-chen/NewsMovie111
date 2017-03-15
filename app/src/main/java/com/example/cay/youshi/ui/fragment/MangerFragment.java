@@ -20,9 +20,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.cay.youshi.R;
 import com.example.cay.youshi.adapter.MovieAdapter;
 import com.example.cay.youshi.base.adapter.BaseFragment;
-import com.example.cay.youshi.bean.MovieDataBean;
-import com.example.cay.youshi.bean.MovieTopbarBean;
-import com.example.cay.youshi.bean.SingleLookupResultBean;
+import com.example.cay.youshi.bean.YouShiSingleLookupResultBean;
 import com.example.cay.youshi.bean.YouShiMovieDealisBean;
 import com.example.cay.youshi.bean.YouShiTopbar;
 import com.example.cay.youshi.bean.YouShiTopbarResultBean;
@@ -30,7 +28,6 @@ import com.example.cay.youshi.databinding.FragmentMovieBinding;
 import com.example.cay.youshi.databinding.HeaderMovieItemBinding;
 import com.example.cay.youshi.http.HttpUtils;
 import com.example.cay.youshi.ui.activity.BaiDuMovieDetailActivity;
-import com.example.cay.youshi.ui.activity.MovieDetailActivity;
 
 import java.util.List;
 
@@ -167,9 +164,9 @@ public class MangerFragment extends BaseFragment<FragmentMovieBinding> implement
 
     private void httpGetData(final String position1, String num, final boolean first, final boolean isResfres) {
         HttpUtils.getInstance().getYouShiData(false).singleLookupResult("genres","动画", position1, num)
-                .map(new Function<SingleLookupResultBean, List<YouShiMovieDealisBean>>() {
+                .map(new Function<YouShiSingleLookupResultBean, List<YouShiMovieDealisBean>>() {
                     @Override
-                    public List<YouShiMovieDealisBean> apply(SingleLookupResultBean singleLookupResultBean) throws Exception {
+                    public List<YouShiMovieDealisBean> apply(YouShiSingleLookupResultBean singleLookupResultBean) throws Exception {
                         return singleLookupResultBean.getResult();
                     }
                 }).subscribeOn(Schedulers.io())

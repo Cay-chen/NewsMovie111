@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="10dp"
+        android:background="@drawable/shape_notclickbg"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_shuoming"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="12dp"
+            android:text="如果本APP中没有搜索到你的资源，请通过以下方式联系我们进行更新！" />
+
+        <TextView
+            android:id="@+id/tv_qqq"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="12dp" />
+
+        <TextView
+            android:id="@+id/tv_weixin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="12dp"
+            android:text="微信：18380468332(推荐)" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_zaixin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:text="在线求片：" />
+
+            <LinearLayout
+                android:layout_marginTop="3dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:layout_marginBottom="12dp"
+                android:id="@+id/ll_sub"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/et_get_movie_name"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="3"
+                    android:background="@drawable/shape_notclickbg"
+                    android:hint=" 填写电影名、电视名"
+                    android:maxEms="15"
+                    android:paddingLeft="2dp"
+                    android:textColor="#000000"
+                    android:textColorLink="#000000"
+                    android:textCursorDrawable="@null" />
+
+                <Button
+                    android:id="@+id/btn_movie_submit"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="20dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_tijiao_rank"
+                    android:text="提交"
+                    android:textColor="@color/button_submit" />
+            </LinearLayout>
+            <TextView
+                android:id="@+id/tv_shuoming1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="12dp"
+                android:textSize="12sp"
+                android:text="说明：\n       1、推荐使用QQ群和微信联系，方便及时更新。\n       2、在线求片，24小时内进行更新。\n       3、请求更新的资源，如果网络上没有，请等待，一旦有，我们会第一时间进行更新。\n      4、淫秽、色情、赌博、暴力、凶杀、恐怖或者教唆犯罪的将不会进行更新" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+</layout>

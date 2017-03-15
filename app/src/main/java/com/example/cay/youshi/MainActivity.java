@@ -14,7 +14,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -32,21 +31,16 @@ import com.example.cay.youshi.bean.VersionUpdataBean;
 import com.example.cay.youshi.databinding.ActivityMainBinding;
 import com.example.cay.youshi.http.HttpUtils;
 import com.example.cay.youshi.http.RxBus.RxBus;
-import com.example.cay.youshi.http.RxBus.RxBusBaseMessage;
 import com.example.cay.youshi.http.RxBus.RxCodeConstants;
 import com.example.cay.youshi.statusbar.StatusBarUtil;
 import com.example.cay.youshi.ui.activity.SearchMovieActivity;
-import com.example.cay.youshi.ui.fragment.MeFragment;
 import com.example.cay.youshi.ui.fragment.MovieHomeFragment;
 import com.example.cay.youshi.ui.menu.NavAboutActivity;
-import com.example.cay.youshi.ui.menu.NavDeedBackActivity;
 import com.example.cay.youshi.ui.menu.NavDownloadActivity;
 import com.example.cay.youshi.ui.menu.NavHomePageActivity;
 import com.example.cay.youshi.utils.CommonUtils;
 import com.example.cay.youshi.utils.ImgLoadUtil;
 import com.example.cay.youshi.webview.WebViewActivity;
-
-import org.litepal.tablemanager.Connector;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -83,7 +77,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         initContentFragment();
         initDrawerLayout();
         initListener();
-        Connector.getDatabase();
         versionUpdateJianCe();
         initRxBus();
        // MiPushClient.setAlias(this,"0510016",null);
@@ -131,7 +124,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void initContentFragment() {
         ArrayList<Fragment> mFragmentList = new ArrayList<>();
         mFragmentList.add(new MovieHomeFragment());
-        //mFragmentList.add(new MeFragment());
+        //mFragmentList.add(new aaMeFragment());
         // 注意使用的是：getSupportFragmentManager
         MyFragmentPagerAdapter adapter = new MyFragmentPagerAdapter(getSupportFragmentManager(), mFragmentList);
         vpContent.setAdapter(adapter);
@@ -169,20 +162,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;*/
 
             case R.id.ll_nav_homepage:// 主页
-                SharedPreferences sp = getSharedPreferences("LOCAL_IP", 0);
-                String  ip = sp.getString("ip", null);
-                if (ip ==null) {
-                    return;
-                }
-                WebViewActivity.loadUrl(MainActivity.this,"http://"+ip.trim()+":8889/Helper/index.html","介绍与帮助");
 
-               /* mBinding.drawerLayout.closeDrawer(GravityCompat.START);
+
+                mBinding.drawerLayout.closeDrawer(GravityCompat.START);
                 mBinding.drawerLayout.postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         NavHomePageActivity.startHome(MainActivity.this);
                     }
-                }, 360);*/
+                }, 360);
 
                 break;
 
@@ -200,7 +188,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 mBinding.drawerLayout.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        NavDeedBackActivity.start(MainActivity.this);
+                        SharedPreferences sp = getSharedPreferences("LOCAL_IP", 0);
+                        String  ip = sp.getString("ip", null);
+                        if (ip ==null) {
+                            return;
+                        }
+                        WebViewActivity.loadUrl(MainActivity.this,"http://"+ip.trim()+":8889/Helper/index.html","介绍与帮助");
+                        // ssNavDeedBackActivity.start(MainActivity.this);
                     }
                 }, 360);
                 break;

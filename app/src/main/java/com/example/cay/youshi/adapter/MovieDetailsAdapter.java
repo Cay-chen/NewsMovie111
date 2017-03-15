@@ -12,8 +12,6 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.example.cay.youshi.R;
 import com.example.cay.youshi.bean.YouShiMovieDealisBean;
 import com.example.cay.youshi.ui.activity.BaiDuMovieDetailActivity;
-import com.example.cay.youshi.ui.activity.MovieDetailActivity;
-import com.example.cay.youshi.bean.MovieDataBean;
 import com.example.cay.youshi.utils.CommonUtils;
 import com.example.cay.youshi.utils.PerfectClickListener;
 

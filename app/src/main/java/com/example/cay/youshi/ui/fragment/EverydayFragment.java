@@ -1,7 +1,6 @@
 package com.example.cay.youshi.ui.fragment;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.databinding.DataBindingUtil;
@@ -18,7 +17,6 @@ import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
 import android.widget.FrameLayout;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -34,12 +32,11 @@ import com.example.cay.youshi.databinding.FragmentEverydayBinding;
 import com.example.cay.youshi.databinding.HeaderItemEverydayBinding;
 import com.example.cay.youshi.http.HttpUtils;
 import com.example.cay.youshi.http.RxBus.RxBus;
-import com.example.cay.youshi.http.RxBus.RxBusBaseMessage;
 import com.example.cay.youshi.http.RxBus.RxCodeConstants;
 import com.example.cay.youshi.ui.activity.BaiDuMovieDetailActivity;
-import com.example.cay.youshi.ui.activity.GetMovieActivity;
-import com.example.cay.youshi.ui.activity.HotMovieActivity;
-import com.example.cay.youshi.ui.activity.MovieDetailActivity;
+import com.example.cay.youshi.ui.activity.InvalidMovieUpdateActivity;
+import com.example.cay.youshi.ui.activity.RequestMovieUpdateActivity;
+import com.example.cay.youshi.ui.activity.ToadyActivity;
 import com.example.cay.youshi.utils.ConnMySqlUtil;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
@@ -122,28 +119,28 @@ public class EverydayFragment extends BaseFragment<FragmentEverydayBinding> {
         mFooterBinding = DataBindingUtil.inflate(LayoutInflater.from(getContext()), R.layout.footer_item_everyday, null, false);
         mHeaderView = mHeaderBinding.getRoot();
         View view = mHeaderView.findViewById(R.id.include_everyday);
-        FrameLayout ibt_movie = (FrameLayout) view.findViewById(R.id.fl_everyday);
-        ImageButton imb = (ImageButton) view.findViewById(R.id.ib_all_movie);
-        ImageButton imh = (ImageButton) view.findViewById(R.id.ib_movie_hot);
+        FrameLayout updata = (FrameLayout) view.findViewById(R.id.fl_every_updata);
+        FrameLayout today = (FrameLayout) view.findViewById(R.id.fl_every_today);
+        FrameLayout shixiao = (FrameLayout) view.findViewById(R.id.fl_every_shi);
 
-        imb.setOnClickListener(new View.OnClickListener() {
+        today.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //RxBus.getDefault().send(RxCodeConstants.JUMP_TYPE_TO_ONE, new RxBusBaseMessage());
-
+                ToadyActivity.start(getContext());
             }
         });
-        ibt_movie.setOnClickListener(new View.OnClickListener() {
+        updata.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getContext(), GetMovieActivity.class);
+                Intent intent = new Intent(getContext(), RequestMovieUpdateActivity.class);
                 getContext().startActivity(intent);
             }
         });
-        imh.setOnClickListener(new View.OnClickListener() {
+        shixiao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getContext(), HotMovieActivity.class);
+                Intent intent = new Intent(getContext(), InvalidMovieUpdateActivity.class);
                 getContext().startActivity(intent);
             }
         });
@@ -330,7 +327,7 @@ public class EverydayFragment extends BaseFragment<FragmentEverydayBinding> {
                                     BaiDuMovieDetailActivity.start((Activity) getContext(), value.getAds().getMovie_id(), value.getAds().getImg_url(), null);
                                 } else {
                                     Intent intent = new Intent(Intent.ACTION_VIEW);
-                                    intent.setData(Uri.parse(value.getAds().getImg_url()));
+                                    intent.setData(Uri.parse(value.getAds().getImg_url().trim()));
                                     getContext().startActivity(intent);
                                 }
                             }

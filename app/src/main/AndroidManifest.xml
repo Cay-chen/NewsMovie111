@@ -80,19 +80,9 @@
             android:theme="@style/MyScrollPage"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.example.cay.youshi.ui.menu.NavDeedBackActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="com.example.cay.youshi.ui.activity.HotMovieActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name="com.example.cay.youshi.ui.menu.NavAboutActivity"
             android:screenOrientation="portrait" />
         <activity android:name="com.example.cay.youshi.ui.menu.NavDownloadActivity" />
-        <activity
-            android:name="com.example.cay.youshi.ui.activity.MovieDetailActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/MyScrollPage" />
 
         /*****************小米推送server 开始***********/
         <!-- android:process=":pushservice" -->
@@ -149,19 +139,15 @@
             </intent-filter>
         </receiver>
         /*****************小米推送server 结束***********/
-        <activity
-            android:name="com.example.cay.youshi.ui.activity.IssueActivity"
-            android:screenOrientation="portrait" />
-        <activity android:name="com.example.cay.youshi.ui.activity.GetMovieActivity"
+        <activity android:name="com.example.cay.youshi.ui.activity.RequestMovieUpdateActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name="com.example.cay.youshi.ui.activity.InvalidMovieUpdateActivity"
             android:screenOrientation="portrait"></activity>
         <activity android:name="com.example.cay.youshi.player.MyPlayerActivity"
             android:theme="@style/JCPlayThem"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait"/>
-        <activity android:name="com.example.cay.youshi.ui.activity.LocalsActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden"
-            android:screenOrientation="portrait" />
-        <activity android:name="com.example.cay.youshi.ui.activity.PlayRecordCActivity"
+        <activity android:name="com.example.cay.youshi.ui.activity.ToadyActivity"
             android:screenOrientation="portrait"/>
         <activity android:name="com.example.cay.youshi.ui.activity.BaiDuMovieDetailActivity"
             android:screenOrientation="portrait"

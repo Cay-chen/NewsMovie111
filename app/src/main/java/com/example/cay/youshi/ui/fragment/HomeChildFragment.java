@@ -20,7 +20,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.cay.youshi.R;
 import com.example.cay.youshi.adapter.MovieAdapter;
 import com.example.cay.youshi.base.adapter.BaseFragment;
-import com.example.cay.youshi.bean.SingleLookupResultBean;
+import com.example.cay.youshi.bean.YouShiSingleLookupResultBean;
 import com.example.cay.youshi.bean.YouShiMovieDealisBean;
 import com.example.cay.youshi.bean.YouShiTopbar;
 import com.example.cay.youshi.bean.YouShiTopbarResultBean;
@@ -182,9 +182,9 @@ public class HomeChildFragment extends BaseFragment<FragmentMovieBinding> implem
 
     private void httpGetData(final String position1, String num, final boolean first, final boolean isResfres) {
         HttpUtils.getInstance().getYouShiData(false).oneLookupResult(type, position1, num)
-                .map(new Function<SingleLookupResultBean, List<YouShiMovieDealisBean>>() {
+                .map(new Function<YouShiSingleLookupResultBean, List<YouShiMovieDealisBean>>() {
                     @Override
-                    public List<YouShiMovieDealisBean> apply(SingleLookupResultBean singleLookupResultBean) throws Exception {
+                    public List<YouShiMovieDealisBean> apply(YouShiSingleLookupResultBean singleLookupResultBean) throws Exception {
                         return singleLookupResultBean.getResult();
                     }
                 }).subscribeOn(Schedulers.io())

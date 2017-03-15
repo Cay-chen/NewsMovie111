@@ -1,10 +1,8 @@
 package com.example.cay.youshi.BroadcastReceiver;
 
 import android.content.Context;
-import android.content.Intent;
 import android.util.Log;
 
-import com.example.cay.youshi.ui.activity.MovieDetailActivity;
 import com.xiaomi.mipush.sdk.MiPushCommandMessage;
 import com.xiaomi.mipush.sdk.MiPushMessage;
 import com.xiaomi.mipush.sdk.PushMessageReceiver;
@@ -58,12 +56,12 @@ public class MyMessageReceiver extends PushMessageReceiver {
         Log.i(TAG,"getPassThrough"+ mMessage12);
         Log.i(TAG, "电影id: "+mMessage9.get("id"));
         Log.i(TAG, "图片地址: "+mMessage9.get("img_url"));
-        Intent intent = new Intent(context, MovieDetailActivity.class);
+       /*// Intent intent = new Intent(context, aaaMovieDetailActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra("id", mMessage9.get("id"));
         intent.putExtra("img_url",mMessage9.get("img_url"));
-        context.startActivity(intent);
-      //  MovieDetailActivity.startE((Activity)context,mMessage9.get("id"),mMessage9.get("img_url"),null);
+        context.startActivity(intent);*/
+      //  aaaMovieDetailActivity.startE((Activity)context,mMessage9.get("id"),mMessage9.get("img_url"),null);
 
     }
     //    onNotificationMessageArrived用来接收服务器发来的通知栏消息（消息到达客户端时触发，并且可以接收应用在前台时不弹出通知的通知消息）

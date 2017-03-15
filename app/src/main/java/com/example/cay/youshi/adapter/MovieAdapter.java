@@ -11,8 +11,6 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.example.cay.youshi.R;
 import com.example.cay.youshi.bean.YouShiMovieDealisBean;
 import com.example.cay.youshi.ui.activity.BaiDuMovieDetailActivity;
-import com.example.cay.youshi.ui.activity.MovieDetailActivity;
-import com.example.cay.youshi.bean.MovieDataBean;
 
 import java.util.List;
 

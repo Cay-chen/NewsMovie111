@@ -20,7 +20,7 @@ import android.widget.Toast;
 
 import com.example.cay.youshi.R;
 import com.example.cay.youshi.adapter.MovieDetailsAdapter;
-import com.example.cay.youshi.bean.SingleLookupResultBean;
+import com.example.cay.youshi.bean.YouShiSingleLookupResultBean;
 import com.example.cay.youshi.bean.YouShiMovieDealisBean;
 import com.example.cay.youshi.databinding.ActivitySearchMovieBinding;
 import com.example.cay.youshi.http.HttpUtils;
@@ -157,9 +157,9 @@ public class SearchMovieActivity extends AppCompatActivity implements SearchView
             @Override
             public void run() {
                 HttpUtils.getInstance().getYouShiData(false).singleLookupResult("name", name, "10000000000", "30")
-                        .map(new Function<SingleLookupResultBean, List<YouShiMovieDealisBean>>() {
+                        .map(new Function<YouShiSingleLookupResultBean, List<YouShiMovieDealisBean>>() {
                             @Override
-                            public List<YouShiMovieDealisBean> apply(SingleLookupResultBean singleLookupResultBean) throws Exception {
+                            public List<YouShiMovieDealisBean> apply(YouShiSingleLookupResultBean singleLookupResultBean) throws Exception {
                                 return singleLookupResultBean.getResult();
                             }
                         }).subscribeOn(Schedulers.io())
