@@ -104,12 +104,27 @@ public class BaiDuMovieDetailActivity extends BaseHeaderActivity<HeaderSlideShap
         bindingContentView.tvOneTitle.setText(subjectsBean.getOther_name());
         String baidu_url = subjectsBean.getBaidu_url().trim();
         bindingContentView.tvBaiduUrl.setMovementMethod(LinkMovementMethod.getInstance());
+        if (subjectsBean.getSubtype().equals("1")) {
+            bindingContentView.tvCount.setVisibility(View.VISIBLE);
+            if (subjectsBean.getNow_num().equals(subjectsBean.getTotal_num())) {
+                bindingContentView.tvCount.setText(subjectsBean.getNow_num() + "集全");
+            } else {
+                bindingContentView.tvCount.setText("已更新至" +subjectsBean.getNow_num() + "集");
+
+            }
+        }
         if (baidu_url.contains(" ")) {
             final String[] urls = baidu_url.trim().split(" ");
             SpannableString spannableString = new SpannableString(baidu_url);
             spannableString.setSpan(new ClickableSpan() {
                 @Override
                 public void onClick(View view) {
+                    HttpUtils.getInstance().getYouShiData(false).searchCount(subjectsBean.getName(),subjectsBean.getId(),subjectsBean.getImg_url())
+                            .subscribeOn(Schedulers.io())
+                            .subscribe();
+                    if (!urls[0].substring(3).trim().substring(0, 4).equals("http")) {
+                        return;
+                    }
                     Intent intent = new Intent(Intent.ACTION_VIEW);
                     intent.setData(Uri.parse(urls[0].substring(3).trim()));
                     startActivity(intent);
@@ -136,6 +151,9 @@ public class BaiDuMovieDetailActivity extends BaseHeaderActivity<HeaderSlideShap
                     // 将文本内容放到系统剪贴板里。
                     cm.setText(subjectsBean.getBaidu_url().trim());
                     Toast.makeText(BaiDuMovieDetailActivity.this, "复制成功", Toast.LENGTH_LONG).show();
+                    HttpUtils.getInstance().getYouShiData(false).searchCount(subjectsBean.getName(),subjectsBean.getId(),subjectsBean.getImg_url())
+                            .subscribeOn(Schedulers.io())
+                            .subscribe();
                 }
             });
         } else {
@@ -143,6 +161,12 @@ public class BaiDuMovieDetailActivity extends BaseHeaderActivity<HeaderSlideShap
             spannableString.setSpan(new ClickableSpan() {
                 @Override
                 public void onClick(View view) {
+                    HttpUtils.getInstance().getYouShiData(false).searchCount(subjectsBean.getName(),subjectsBean.getId(),subjectsBean.getImg_url())
+                            .subscribeOn(Schedulers.io())
+                            .subscribe();
+                    if (!subjectsBean.getBaidu_url().trim().substring(0, 4).equals("http")) {
+                        return;
+                    }
                     Intent intent = new Intent(Intent.ACTION_VIEW);
                     intent.setData(Uri.parse(subjectsBean.getBaidu_url().trim()));
                     startActivity(intent);
@@ -153,6 +177,9 @@ public class BaiDuMovieDetailActivity extends BaseHeaderActivity<HeaderSlideShap
             bindingContentView.btnCopyUrlPassword.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    HttpUtils.getInstance().getYouShiData(false).searchCount(subjectsBean.getName(),subjectsBean.getId(),subjectsBean.getImg_url())
+                            .subscribeOn(Schedulers.io())
+                            .subscribe();
                     ClipboardManager cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
                     // 将文本内容放到系统剪贴板里。
                     cm.setText(subjectsBean.getBaidu_url().trim());

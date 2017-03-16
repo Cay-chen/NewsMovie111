@@ -77,10 +77,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         initContentFragment();
         initDrawerLayout();
         initListener();
-        versionUpdateJianCe();
         initRxBus();
        // MiPushClient.setAlias(this,"0510016",null);
         upCountLogin();
+        versionUpdateJianCe();
       //  RefWatcher refWatcher = LeakCanary.install(MainActivity.class);
 
     }
@@ -321,18 +321,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      */
 
     private void versionUpdateJianCe() {
-        HttpUtils.getInstance().getMyObservableClient().verJianCe()
+        HttpUtils.getInstance().getYouShiData(false).checkVersion()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<List<VersionUpdataBean>>() {
+                .subscribe(new Observer<VersionUpdataBean>() {
                     @Override
                     public void onSubscribe(Disposable d) {
 
                     }
 
                     @Override
-                    public void onNext(List<VersionUpdataBean> list) {
-                        responseVersionUpdate(list);
+                    public void onNext(VersionUpdataBean bean) {
+                        responseVersionUpdate(bean);
                     }
 
                     @Override
@@ -351,15 +351,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     /**
      * 请求版本更新的响应
      */
-    public void responseVersionUpdate(List<VersionUpdataBean> responses) {
-        if (responses.size() < 1) {
-            return;
-        }
-        VersionUpdataBean versionUpdate = responses.get(0);
+    public void responseVersionUpdate(VersionUpdataBean responses) {
         VersionUpdateManager update = new VersionUpdateManager(this,
-                versionUpdate.getVersion(), versionUpdate.getURLaddress());
+                responses.getVersion(), responses.getURLaddress());
         // 强制更新
-        if (versionUpdate.getForcedUpdate() == 1) {
+        if (responses.getForcedUpdate() == 1) {
             update.setForcedUpdate(true);
             update.setTitle(this.getResources().getString(
                     R.string.version_update_tips_force));
@@ -372,30 +368,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      * 登录统计
      */
     public void upCountLogin() {
-        HttpUtils.getInstance().getMyObservableClient().upCountLogin()
+        HttpUtils.getInstance().getYouShiData(false).loginCount()
                 .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<UpDdtaBackBean>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-
-                    }
-
-                    @Override
-                    public void onNext(UpDdtaBackBean value) {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-
-                    @Override
-                    public void onComplete() {
-
-                    }
-                });
+                .subscribe();
     }
 
     @Override

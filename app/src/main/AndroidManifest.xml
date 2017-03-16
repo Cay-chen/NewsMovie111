@@ -143,7 +143,6 @@
             android:screenOrientation="portrait"></activity>
         <activity android:name="com.example.cay.youshi.ui.activity.InvalidMovieUpdateActivity"
             android:screenOrientation="portrait"></activity>
-        <activity android:name="com.example.cay.youshi.player.MyPlayerActivity"
             android:theme="@style/JCPlayThem"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait"/>

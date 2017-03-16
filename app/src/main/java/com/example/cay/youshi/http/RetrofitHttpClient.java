@@ -8,8 +8,6 @@ import com.example.cay.youshi.bean.YouShiSingleLookupResultBean;
 import com.example.cay.youshi.bean.YouShiTodayBackResultBean;
 import com.example.cay.youshi.bean.YouShiTopbarResultBean;
 
-import java.util.List;
-
 import io.reactivex.Observable;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
@@ -27,16 +25,16 @@ public interface RetrofitHttpClient {
      *
      * @return 等等
      */
-    @POST("VMovie/ServerCountLogin")
-    Observable<UpDdtaBackBean> upCountLogin();
-
-
+    @POST("/YouShiServer/LoginCount")
+    Observable<UpDdtaBackBean> loginCount();
     /**
-     * 版本更新检测
-     * @return
+     * 上传收索统计
+     *
+     * @return 等等
      */
-    @GET("VMovie/VersionUpdataServer")
-    Observable<List<VersionUpdataBean>> verJianCe();
+    @POST("/YouShiServer/SearchCount")
+    Observable<UpDdtaBackBean> searchCount(@Query("name")String name,@Query("movie_id")String movie_id,@Query("img_url")String img_url);
+
 
     /**
      * 获取首页数据
@@ -96,5 +94,11 @@ public interface RetrofitHttpClient {
      */
     @GET("/YouShiServer/UpUpdateAndInvail")
     Observable<UpDdtaBackBean> updateAndInvail(@Query("type") String type,@Query("issue") String name);
+    /**
+     * 版本更新检测
+     * @return s
+     */
+    @GET("/YouShiServer/checkVersion")
+    Observable<VersionUpdataBean> checkVersion();
 }
 

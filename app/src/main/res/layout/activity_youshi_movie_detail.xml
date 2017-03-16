@@ -114,7 +114,15 @@
                     android:text="百度网盘"
                     android:textColor="@color/colorContent"
                     android:textSize="17sp" />
-
+                <TextView
+                    android:id="@+id/tv_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:text="已更新至30集"
+                    android:visibility="gone"
+                    android:textColor="@color/colorTheme"
+                    android:textSize="14sp" />
             </LinearLayout>
 
             <!--导演&演员-->
