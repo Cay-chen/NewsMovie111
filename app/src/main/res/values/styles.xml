@@ -130,18 +130,6 @@
         <item name="android:layout_height">@dimen/def_height</item>
         <item name="android:layout_marginBottom">10dp</item>
     </style>
-    <style name="BottomSheet.StyleDialog" parent="BottomSheet.Dialog">
-        <item name="android:backgroundDimAmount">0.5</item>
-        <item name="android:windowAnimationStyle">@style/BottomSheet.Animation</item>
-        <item name="android:textColorPrimary">@color/colorTitle</item>
-        <item name="android:textColorSecondary">@color/colorSubtitle</item>
-        <item name="android:textSize">15sp</item>
-        <item name="android:textColorHint">#42ffffff</item>
-        <item name="bs_dialogBackground">@color/colorWhite</item>
-        <item name="bs_dividerColor">@color/colorLine</item>
-        <item name="bs_numColumns">5</item>
-        <item name="bs_listStyle">@style/BottomSheet.List</item>
-    </style>
 
     <!--查看大图页面，全屏显示-->
     <style name="ViewBigPicTheme" parent="Theme.AppCompat.Light.NoActionBar">

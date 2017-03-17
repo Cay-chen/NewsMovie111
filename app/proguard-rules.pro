@@ -16,6 +16,9 @@
 #   public *;
 #}
  -ignorewarnings
+ -optimizationpasses 5
+ -dontusemixedcaseclassnames
+ -verbose
 
 # glide 的混淆代码
 -keep public class * implements com.bumptech.glide.module.GlideModule
@@ -49,6 +52,7 @@ public *;
 
 #这里com.xiaomi.mipushdemo.DemoMessageRreceiver改成app中定义的完整类名
 -keep class com.example.cay.newsmovie.BroadcastReceiver {*;}
+
 #可以防止一个误报的 warning 导致无法成功编译，如果编译使用的 Android 版本是 23。
 -dontwarn com.xiaomi.push.**
 
@@ -79,10 +83,14 @@ public *;
 
 -keep class com.alibaba.fastjson.**{*;}
 -keep class * implements java.io.Serializable { *; }
--keep class com.example.cay.newsmovie.bean.**{*;}
+-keep class com.example.cay.youshi.bean.**{*;}
+-keep class android.content.SharedPreferences
+-keep class com.mysql.jdbc.**{*;}
+-keep class org.git.mm.mysql.**{*;}
 
 -keepattributes *Annotation
 -keepattributes Signature
+
 
 
 

@@ -7,22 +7,24 @@ import android.os.Process;
 
 import com.example.cay.youshi.http.HttpUtils;
 import com.squareup.leakcanary.LeakCanary;
-
-import org.litepal.LitePal;
+import com.tencent.bugly.crashreport.CrashReport;
+import com.xiaomi.channel.commonutils.logger.LoggerInterface;
+import com.xiaomi.mipush.sdk.Logger;
+import com.xiaomi.mipush.sdk.MiPushClient;
 
 import java.util.List;
 
 
 
-/**
+/** d
  * Created by jingbin on 2016/11/22.
  */
 
 public class MyApplication extends Application {
     private static MyApplication myApplication;
-    public static final String APP_ID = "2882303761517547390";
-    public static final String APP_KEY = "5111754767390";
-    public static final String TAG = "com.example.cay.newsmovie";
+    public static final String APP_ID = "2882303761517558273";
+    public static final String APP_KEY = "5941755876273";
+    public static final String TAG = "com.example.cay.youshi";
     public static Context context;
     public static MyApplication getInstance() {
         // if语句下是不会走的，Application本身已单例
@@ -49,8 +51,8 @@ public class MyApplication extends Application {
         super.onCreate();
         myApplication = this;
         HttpUtils.getInstance().setContext(getApplicationContext());
-     //   CrashReport.initCrashReport(getApplicationContext());
-/**********************小米推送开始**************************
+       CrashReport.initCrashReport(getApplicationContext());
+//*********************小米推送开始**************************
        //初始化push推送服务
         if(shouldInit()) {
             MiPushClient.registerPush(this, APP_ID, APP_KEY);
@@ -65,17 +67,17 @@ public class MyApplication extends Application {
 
             @Override
             public void log(String content, Throwable t) {
-                Log.d(TAG, content, t);
+            //    Log.d(TAG, content, t);
             }
 
             @Override
             public void log(String content) {
-                Log.d(TAG, content);
+               // Log.d(TAG, content);
             }
         };
         Logger.setLogger(this, newLogger);
 
-        *********************小米推送结束***************************/
+        //*********************小米推送结束**************************
         if (LeakCanary.isInAnalyzerProcess(this)) {
             // This process is dedicated to LeakCanary for heap analysis.
             // You should not init your app in this process.
@@ -83,7 +85,6 @@ public class MyApplication extends Application {
         }
         LeakCanary.install(this);
         // Normal app init code...
-        LitePal.initialize(this);
 
     }
 

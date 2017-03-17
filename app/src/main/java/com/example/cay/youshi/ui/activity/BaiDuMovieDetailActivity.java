@@ -193,8 +193,7 @@ public class BaiDuMovieDetailActivity extends BaseHeaderActivity<HeaderSlideShap
 
     @Override
     protected void setShareItem() {
-        ShareUtils.share(this, "正在使用V视观看【" + name + "】 下载V视地址:https://fir.im/vision");
-
+        ShareUtils.share(this, name+"\n百度网盘 "+baidu_url+"\n该资源由优视APP收索而来，想免费看最新电影、电视剧，请下载优视APP:"+getResources().getString(R.string.app_url));
     }
 
     @Override

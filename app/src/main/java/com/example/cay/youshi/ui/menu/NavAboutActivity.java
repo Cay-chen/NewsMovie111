@@ -20,7 +20,7 @@ public class NavAboutActivity extends BaseActivity<ActivityNavAboutBinding> {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nav_about);
         showContentView();
-        setTitle("关于V视");
+        setTitle("关于优视");
 
 
         // 直接写在布局文件里会很耗内存
@@ -31,17 +31,12 @@ public class NavAboutActivity extends BaseActivity<ActivityNavAboutBinding> {
     private void initListener() {
 
 
-        bindingView.tvFunction.setOnClickListener(new PerfectClickListener() {
-            @Override
-            protected void onNoDoubleClick(View v) {
-            //TODO
-            }
-        });
+
 
         bindingView.tvNewVersion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Uri issuesUrl = Uri.parse("https://fir.im/vision");
+                Uri issuesUrl = Uri.parse(getResources().getString(R.string.app_url));
                 Intent intent = new Intent(Intent.ACTION_VIEW, issuesUrl);
                 startActivity(intent);
             }

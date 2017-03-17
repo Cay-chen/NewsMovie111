@@ -43,7 +43,7 @@
                         android:id="@+id/tv_username"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Cay"
+                        android:text="Hello"
                         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                         android:textColor="@color/colorWhite"
                         android:textSize="17sp" />
@@ -55,7 +55,7 @@
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="6dp"
                         android:background="@drawable/shape_bg_level"
-                        android:text="Lv.10"
+                        android:text="VIP10"
                         android:textColor="@color/colorWhite"
                         android:textSize="10sp"
                         android:textStyle="italic|bold" />
@@ -86,7 +86,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
-                android:text="项目主页"
+                android:text="介        绍"
                 android:textColor="@color/colorContent"
                 android:textSize="15sp" />
 
@@ -139,7 +139,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
-                android:text="介绍帮助"
+                android:text="帮        助"
                 android:textColor="@color/colorContent"
                 android:textSize="15sp" />
 
@@ -165,7 +165,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
-                android:text="关于V视"
+                android:text="关于优视"
                 android:textColor="@color/colorContent"
                 android:textSize="15sp" />
 

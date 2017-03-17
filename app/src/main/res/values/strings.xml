@@ -1,30 +1,39 @@
 <resources>
-    <string name="app_name">V视22</string>
+    <string name="app_name">优视</string>
     <string name="action_share">分享</string>
     <string name="title_activity_base">BaseActivity</string>
-    <string name="string_about">由于网易云音乐用了很久，特别喜爱它的界面风格，所以仿写了它的UI。如构成侵权请及时通知我修改或删除。
-        \n\n新闻数据和微信数据，使用的聚合提供的接口，该数据解释权都归聚合所有。
-        \n\n视频内容都是在互联网上搜集而来，仅供测试和学习交流，若侵犯了您的权益，请及时联系我。
+    <string name="string_about">本APP为非营利性APP，上面所有数据资源均来自互联网，仅供测试和学习交流。本APP不对任何下载者和转载者造成的危害负法律责任。
+        \n\n若侵犯了您的权益，请发相关文件及授权证书到邮箱：421069253@qq.com 我们会尽快删除相关侵权内容。
         </string>
+    <string name="string_about_al">专享优惠券是专门回馈给支持该APP的用户，里面提供了很多淘宝天猫的专享优惠券，数量有限，抢到得到，购买时使用该优惠券，相当划算。
+        \n\n点击APP首页左下角的按钮将会用浏览器打开淘宝天猫无门槛专享优惠券页面（如果手机安装了【手机淘宝】APP并且处于打开状态，会提示跳转到手机淘宝APP打开该页面），如果有你喜欢的商品记得先领券再购买。
+        </string>
+    <string name="string_about_shuoming"> 说明：\n
+    1、专享优惠券是淘宝商家用很高的折扣甚至亏本来吸引消费者来购买，然后冲量排名！\n
+        2、专享优费券为什么不公开？ 答：如果公开给所有消费者，每个人都知道，销量冲上去了，但是亏大了。所以做成专享优惠券，商家会控制优惠券的数量然后通过特殊的渠道发送出去，只要达到冲量的数字就可以了。\n
+        3、使用优费券购买的商品质量如何？ 答：使用该优惠券购买的商品和你正常在淘宝、天猫上面收索到该商品的质量和售后都一样（收货不满意可以退货），只是你正常收索到的不能领取优费券购买而已。
+
+
+    </string>
     <string name="search_err">请输入收索内容</string>
     <string name="actionbar_more">分享网盘链接</string>
     <string name="actionbar_copy">复制网盘链接</string>
     <string name="movie_year">上映日期：</string>
     <string name="movie_city">制片国家/地区：</string>
     <string name="string_type">类型：</string>
-
+    <string name="app_url">	http://fir.im/ushi</string>
     <string name="string_rating">评分：</string>
     <string name="actionbar_search">搜索</string>
 
 
     <string name="string_about_me">
-        QQ: 276495166
+        QQ: 421069253
         \nEmail: 421069253@qq.com
     </string>
     <!-- 版本更新 -->
     <string name="version_update_exception">下载异常</string>
     <string name="version_update_tips_normal">检测到新版本，立刻更新吗？</string>
-    <string name="version_update_tips_force">您的V视版本较旧，需要更新才能继续使用！</string>
+    <string name="version_update_tips_force">您的优视版本较旧，需要更新才能继续使用！</string>
     <string name="version_update_tips_result">当前为最新版本</string>
     <string name="version_update_tips_progress">0%</string>
     <string name="version_update_tips_loading">正在更新，请稍候&#8230;</string>
@@ -42,41 +51,7 @@
     <string name="empty_no_data">没有搜索到相关视频</string>
 
 
-
-    <string name="string_lib">
-         com.android.support:appcompat-v7:25.1.1
-        \n com.android.support:design:25.1.0
-        \n com.github.bumptech.glide:glide:3.7.0
-        \n io.reactivex.rxjava2:rxjava:2.0.1
-        \n io.reactivex.rxjava2:rxandroid:2.0.1
-        \n org.ligboy.retrofit2:converter-fastjson-android:2.1.0
-        \n com.jakewharton.retrofit:retrofit2-rxjava2-adapter:1.0.0
-        \n  com.github.CymChad:BaseRecyclerViewAdapterHelper:2.8.0
-        \n com.nineoldandroids:library:2.4.0
-        \n jp.wasabeef:glide-transformations:2.0.1
-        \n com.alibaba:fastjson:1.1.56.android
-        \n com.youth.banner:banner:1.4.8
-        \n com.cocosw:bottomsheet:1.+@aar
-        \n fm.jiecao:jiecaovideoplayer:5.5
-
-    </string>
-
     <string name="string_everyday_empty">暂时没有更新内容，去看看其他信息吧~</string>
-    <string name="string_share_text">发现了一款可以看最新热播电影和电视剧的APP，大力推荐哦~：https://fir.im/vision</string>
+    <string name="string_share_text">发现了一款可以搜索最新热播电影、电视剧百度网盘的APP，大力推荐哦~下载地址：http://fir.im/ushi</string>
 
-    <!--国家-->
-    <string name="USA">欧美</string>
-    <string name="CHA">中国大陆</string>
-    <string name="THA">泰国</string>
-    <string name="HK">中国香港</string>
-    <string name="KOR">韩国</string>
-    <string name="JAP">日本</string>
-
-
-
-    <!--me设置-->
-    <string name="me_bendi">本地视频</string>
-    <string name="me_player">最近播放</string>
-    <string name="me_download">下载管理</string>
-    <string name="me_shouc">我的收藏</string>
 </resources>

@@ -20,10 +20,8 @@ public class NavDownloadActivity extends BaseActivity<ActivityNavDownloadBinding
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nav_download);
         showContentView();
-
         setTitle("扫码下载");
-        String url = "https://fir.im/vision";
-        QRCodeUtil.showThreadImage(this, url, bindingView.ivErweima, R.mipmap.icon);
+        QRCodeUtil.showThreadImage(this, getResources().getString(R.string.app_url), bindingView.ivErweima, R.mipmap.icon);
         bindingView.tvShare.setOnClickListener(new PerfectClickListener() {
             @Override
             protected void onNoDoubleClick(View v) {

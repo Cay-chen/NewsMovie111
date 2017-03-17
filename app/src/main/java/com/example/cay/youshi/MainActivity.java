@@ -79,8 +79,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         initListener();
         initRxBus();
        // MiPushClient.setAlias(this,"0510016",null);
-        upCountLogin();
-        versionUpdateJianCe();
+
       //  RefWatcher refWatcher = LeakCanary.install(MainActivity.class);
 
     }
@@ -193,7 +192,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         if (ip ==null) {
                             return;
                         }
-                        WebViewActivity.loadUrl(MainActivity.this,"http://"+ip.trim()+":8889/Helper/index.html","介绍与帮助");
+                        WebViewActivity.loadUrl(MainActivity.this,"http://"+ip.trim()+":8889/Helper/index.html","帮助");
                         // ssNavDeedBackActivity.start(MainActivity.this);
                     }
                 }, 360);
@@ -268,6 +267,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .subscribe(new Consumer() {
                     @Override
                     public void accept(final Object o) throws Exception {
+                        upCountLogin();
+                        versionUpdateJianCe();
                         mFl.setVisibility(View.VISIBLE);
                         mFl.setOnClickListener(new View.OnClickListener() {
                             @Override

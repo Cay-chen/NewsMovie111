@@ -235,7 +235,6 @@ public class EverydayFragment extends BaseFragment<FragmentEverydayBinding> {
                         RxBus.getDefault().send(RxCodeConstants.JUMP_TYPE_TO_ONE, value.getAlmm_url());
 
 
-
                         /**************获取banner数据****************************/
                         String[] bannerTitle = new String[value.getBanners().size()];
                         String[] bannerImg = new String[value.getBanners().size()];
